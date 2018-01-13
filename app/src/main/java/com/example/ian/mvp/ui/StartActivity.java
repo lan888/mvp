@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -96,85 +95,91 @@ public class StartActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        final String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
-        final ArrayList<String> mData1 = new ArrayList<String>();
-        final ArrayList<String> mData2 = new ArrayList<String>();
-        final ArrayList<String> mData3 = new ArrayList<String>();
-        final ArrayList<String> mData4 = new ArrayList<String>();
-        BmobQuery<Rooms> query = new BmobQuery<Rooms>();
-        query.addWhereEqualTo("user",user);
-        query.findObjects(new FindListener<Rooms>() {
-            @Override
-            public void done(List<Rooms> list, BmobException e) {
-                if (e == null) {
+        MyUser myUser = new MyUser();
+        if (myUser==null){
 
-                    for (Rooms r : list) {
-                        String s = r.getAddressInfo();
-                        mData1.add(s);
-                    }
-                    Log.i("a", "a:" + mData1.size());
-                    a = mData1.size();
+        }else {
+            final String user = myUser.getUsername();
+            final ArrayList<String> mData1 = new ArrayList<String>();
+            final ArrayList<String> mData2 = new ArrayList<String>();
+            final ArrayList<String> mData3 = new ArrayList<String>();
+            final ArrayList<String> mData4 = new ArrayList<String>();
+            BmobQuery<Rooms> query = new BmobQuery<Rooms>();
+            query.addWhereEqualTo("user",user);
+            query.findObjects(new FindListener<Rooms>() {
+                @Override
+                public void done(List<Rooms> list, BmobException e) {
+                    if (e == null) {
 
-                    BmobQuery<Renters> query = new BmobQuery<Renters>();
-                    query.addWhereEqualTo("landlord", user);
-                    query.findObjects(new FindListener<Renters>() {
-                        @Override
-                        public void done(List<Renters> list, BmobException e) {
-                            if (e == null) {
-                                for (Renters r : list) {
-                                    String s = r.getName();
-                                    mData2.add(s);
-                                }
-                                Log.i("b", "b:" + mData2.size());
-                                b = mData2.size();
-                                BmobQuery<Bill> query = new BmobQuery<Bill>();
-                                query.addWhereEqualTo("user", user);
-                                query.findObjects(new FindListener<Bill>() {
-                                    @Override
-                                    public void done(List<Bill> list, BmobException e) {
-                                        if (e == null) {
-                                            for (Bill r : list) {
-                                                String s = r.getRoom();
-                                                mData3.add(s);
-                                            }
-                                            Log.i("c", "c:" + mData3.size());
-                                            c = mData3.size();
-                                            BmobQuery<Bill> query = new BmobQuery<Bill>();
-                                            query.addWhereEqualTo("tenant", user);
-                                            query.findObjects(new FindListener<Bill>() {
-                                                @Override
-                                                public void done(List<Bill> list, BmobException e) {
-                                                    if (e == null) {
-                                                        for (Bill r : list) {
-                                                            String s = r.getRoom();
-                                                            mData4.add(s);
-                                                        }
-                                                        d = mData4.size();
-                                                        Log.i("d", "d:" + mData4.size());
-                                                        Utils.putIntValue(StartActivity.this, "a", a);
-                                                        Utils.putIntValue(StartActivity.this, "b", b);
-                                                        Utils.putIntValue(StartActivity.this, "c", c);
-                                                        Utils.putIntValue(StartActivity.this, "d", d);
-
-                                                    } else {
-                                                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                                                    }
-                                                }
-                                            });
-
-                                        } else {
-                                            Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                                        }
-                                    }
-                                });
-                            } else {
-                                Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
-                            }
+                        for (Rooms r : list) {
+                            String s = r.getAddressInfo();
+                            mData1.add(s);
                         }
-                    });
+                        Log.i("a", "a:" + mData1.size());
+                        a = mData1.size();
+
+                        BmobQuery<Renters> query = new BmobQuery<Renters>();
+                        query.addWhereEqualTo("landlord", user);
+                        query.findObjects(new FindListener<Renters>() {
+                            @Override
+                            public void done(List<Renters> list, BmobException e) {
+                                if (e == null) {
+                                    for (Renters r : list) {
+                                        String s = r.getName();
+                                        mData2.add(s);
+                                    }
+                                    Log.i("b", "b:" + mData2.size());
+                                    b = mData2.size();
+                                    BmobQuery<Bill> query = new BmobQuery<Bill>();
+                                    query.addWhereEqualTo("user", user);
+                                    query.findObjects(new FindListener<Bill>() {
+                                        @Override
+                                        public void done(List<Bill> list, BmobException e) {
+                                            if (e == null) {
+                                                for (Bill r : list) {
+                                                    String s = r.getRoom();
+                                                    mData3.add(s);
+                                                }
+                                                Log.i("c", "c:" + mData3.size());
+                                                c = mData3.size();
+                                                BmobQuery<Bill> query = new BmobQuery<Bill>();
+                                                query.addWhereEqualTo("tenant", user);
+                                                query.findObjects(new FindListener<Bill>() {
+                                                    @Override
+                                                    public void done(List<Bill> list, BmobException e) {
+                                                        if (e == null) {
+                                                            for (Bill r : list) {
+                                                                String s = r.getRoom();
+                                                                mData4.add(s);
+                                                            }
+                                                            d = mData4.size();
+                                                            Log.i("d", "d:" + mData4.size());
+                                                            Utils.putIntValue(StartActivity.this, "a", a);
+                                                            Utils.putIntValue(StartActivity.this, "b", b);
+                                                            Utils.putIntValue(StartActivity.this, "c", c);
+                                                            Utils.putIntValue(StartActivity.this, "d", d);
+
+                                                        } else {
+                                                            Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                                        }
+                                                    }
+                                                });
+
+                                            } else {
+                                                Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                }
+                            }
+                        });
+                    }
                 }
-            }
-        });
+            });
+        }
+
     }
 
 
