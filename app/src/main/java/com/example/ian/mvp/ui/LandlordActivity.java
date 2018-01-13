@@ -236,98 +236,103 @@ public class LandlordActivity extends BaseActivity {
         mMcTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LandlordActivity.this);
-                LayoutInflater factory = LayoutInflater.from(LandlordActivity.this);
-                final View textEntryView = factory.inflate(R.layout.money,null);
-                builder.setTitle("收款");
-                builder.setView(textEntryView);
+                if (data.size()==0){
+                    Utils.showShortToast(LandlordActivity.this,"请先添加房源");
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(LandlordActivity.this);
+                    LayoutInflater factory = LayoutInflater.from(LandlordActivity.this);
+                    final View textEntryView = factory.inflate(R.layout.money,null);
+                    builder.setTitle("收款");
+                    builder.setView(textEntryView);
 
-                final Spinner address = textEntryView.findViewById(R.id.nice_spinner);
-                final EditText waterBill = textEntryView.findViewById(R.id.waterBill);
-                final EditText electricityBill = textEntryView.findViewById(R.id.electricityBill);
-                SpinnerAdapter spinnerAdapter = new SpinnerAdapter(LandlordActivity.this,data);
-                address.setAdapter(spinnerAdapter);
-
-
-                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    final Spinner address = textEntryView.findViewById(R.id.nice_spinner);
+                    final EditText waterBill = textEntryView.findViewById(R.id.waterBill);
+                    final EditText electricityBill = textEntryView.findViewById(R.id.electricityBill);
+                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(LandlordActivity.this,data);
+                    address.setAdapter(spinnerAdapter);
 
 
-                    }
-                });
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                        SimpleDateFormat formatter  =   new    SimpleDateFormat    ("yyyy年MM月");
-                        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-                        final String str =  formatter.format(curDate);
 
-                        final String addressInfo = data.get(address.getSelectedItemPosition());
-                        Log.i("addressInfo",addressInfo);
-                        BmobQuery<Rooms> query = new BmobQuery<Rooms>();
-                        query.addWhereEqualTo("addressInfo",addressInfo);
-                        query.findObjects(new FindListener<Rooms>(){
-                            @Override
-                            public void done(List<Rooms> list, BmobException e) {
-                                if (e == null) {
-                                    for (Rooms r : list) {
-                                        dataPrice = r.getPrice();
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                                    }
-                                    double waterBillInfo1 = Double.parseDouble(waterBill.getText().toString());
-                                    double electricityBillInfo1 = Double.parseDouble(electricityBill.getText().toString());
-                                    double bill = Double.parseDouble(dataPrice);
-                                    String waterBillInfo = waterBill.getText().toString();
-                                    String electricityBillInfo = electricityBill.getText().toString();
-                                    Double sum =  waterBillInfo1+electricityBillInfo1+bill;
-                                    String sumInfo = sum.toString();
-                                    if (waterBill.getText().toString().matches("(([1-9][0-9]*)|(([0]\\.\\d{0,2}|[1-9][0-9]*\\.\\d{0,2})))")) {
-                                        if (electricityBill.getText().toString().matches("(([1-9][0-9]*)|(([0]\\.\\d{0,2}|[1-9][0-9]*\\.\\d{0,2})))")) {
-                                            b1.setBill(sumInfo);
-                                            b1.setRoom(addressInfo);
-                                            b1.setWaterBill(waterBillInfo);
-                                            b1.setElectricityBill(electricityBillInfo);
-                                            b1.setMonth(str);
-                                            b1.setUser(user);
-                                            b1.setStatus("未缴费");
-                                            b1.save(new SaveListener<String>() {
-                                                @Override
-                                                public void done(String s, BmobException e) {
-                                                    if (e == null) {
-                                                        Log.e("success", "添加数据成功，返回objectId为：" + s);
-                                                    } else {
-                                                        Log.e("fail", "创建数据失败：" + e.getMessage());
+                            SimpleDateFormat formatter  =   new    SimpleDateFormat    ("yyyy年MM月");
+                            Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+                            final String str =  formatter.format(curDate);
+
+                            final String addressInfo = data.get(address.getSelectedItemPosition());
+                            Log.i("addressInfo",addressInfo);
+                            BmobQuery<Rooms> query = new BmobQuery<Rooms>();
+                            query.addWhereEqualTo("addressInfo",addressInfo);
+                            query.findObjects(new FindListener<Rooms>(){
+                                @Override
+                                public void done(List<Rooms> list, BmobException e) {
+                                    if (e == null) {
+                                        for (Rooms r : list) {
+                                            dataPrice = r.getPrice();
+
+                                        }
+                                        double waterBillInfo1 = Double.parseDouble(waterBill.getText().toString());
+                                        double electricityBillInfo1 = Double.parseDouble(electricityBill.getText().toString());
+                                        double bill = Double.parseDouble(dataPrice);
+                                        String waterBillInfo = waterBill.getText().toString();
+                                        String electricityBillInfo = electricityBill.getText().toString();
+                                        Double sum =  waterBillInfo1+electricityBillInfo1+bill;
+                                        String sumInfo = sum.toString();
+                                        if (waterBill.getText().toString().matches("(([1-9][0-9]*)|(([0]\\.\\d{0,2}|[1-9][0-9]*\\.\\d{0,2})))")) {
+                                            if (electricityBill.getText().toString().matches("(([1-9][0-9]*)|(([0]\\.\\d{0,2}|[1-9][0-9]*\\.\\d{0,2})))")) {
+                                                b1.setBill(sumInfo);
+                                                b1.setRoom(addressInfo);
+                                                b1.setWaterBill(waterBillInfo);
+                                                b1.setElectricityBill(electricityBillInfo);
+                                                b1.setMonth(str);
+                                                b1.setUser(user);
+                                                b1.setStatus("未缴费");
+                                                b1.save(new SaveListener<String>() {
+                                                    @Override
+                                                    public void done(String s, BmobException e) {
+                                                        if (e == null) {
+                                                            Log.e("success", "添加数据成功，返回objectId为：" + s);
+                                                        } else {
+                                                            Log.e("fail", "创建数据失败：" + e.getMessage());
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+
+                                            } else {
+                                                Toast.makeText(LandlordActivity.this, "电费数额只能带两位小数", Toast.LENGTH_SHORT).show();
+                                            }
 
                                         } else {
-                                            Toast.makeText(LandlordActivity.this, "电费数额只能带两位小数", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LandlordActivity.this, "水费数额只能带两位小数", Toast.LENGTH_SHORT).show();
                                         }
 
-                                    } else {
-                                        Toast.makeText(LandlordActivity.this, "水费数额只能带两位小数", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(LandlordActivity.this,SuccessAddActivity.class);
+                                        startActivity(intent);
+
+                                        Log.i("bmob","成功："+data.size());
+                                    }else {
+                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                                     }
-
-
-                                    Intent intent = new Intent(LandlordActivity.this,SuccessAddActivity.class);
-                                    startActivity(intent);
-
-                                    Log.i("bmob","成功："+data.size());
-                                }else {
-                                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
                                 }
-                            }
 
-                        });
+                            });
 
 
-                    }
+                        }
 
-                });
-                builder.create().show();
+                    });
+                    builder.create().show();
+                }
+
             }
         });
 
