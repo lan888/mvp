@@ -39,7 +39,7 @@ public class ItemFragment1 extends Fragment {
     private ArrayList<String> mTenantTelData= new ArrayList<>();
     private ArrayList<String> mTenantIdData= new ArrayList<>();
     private ArrayList<String> mTenantPhotoData= new ArrayList<>();
-
+    String user;
 
     public ItemFragment1() {
 
@@ -64,8 +64,10 @@ public class ItemFragment1 extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-
-            String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
+            MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+            if (myUser!=null){
+                user = myUser.getUsername();
+            }
             BmobQuery<Renters> query = new BmobQuery<Renters>();
             query.addWhereEqualTo("landlord",user);
             query.findObjects(new FindListener<Renters>(){

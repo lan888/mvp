@@ -95,12 +95,16 @@ public class LandlordActivity extends BaseActivity {
     int c;
 
     final Bill b1= new Bill() ;
-    String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
+    String user ;
 
 
     @Override
     public void initControl() {
         setContentView(R.layout.activity_demo1);
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        if (myUser!=null){
+            user = myUser.getUsername();
+        }
 
 //        //沉浸式状态栏
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上

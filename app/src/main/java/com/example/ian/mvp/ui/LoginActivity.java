@@ -70,6 +70,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
     private BmobFile uri;
     private LoginActivityPresenter presenter;
     private long exitTime;
+    private ImageView img;
 
 
     @Override
@@ -173,7 +174,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                 builder.setTitle("管理员注册");
                 builder.setView(textEntryView);
 
-                final ImageView img = textEntryView.findViewById(R.id.admin_pic_reg);
+                img = textEntryView.findViewById(R.id.admin_pic_reg);
                 final EditText phone =  textEntryView.findViewById(R.id.admin_register_phone);
                 final EditText name = textEntryView.findViewById(R.id.admin_register_name);
                 final EditText firstPassword =  textEntryView.findViewById(R.id.admin_register_first_password);
@@ -184,6 +185,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     @Override
                     public void onClick(View view) {
                         showChoosePicDialog();
+
 
                     }
                 });
@@ -399,7 +401,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
             mBitmap = extras.getParcelable("data");
             Drawable drawable = new BitmapDrawable(mBitmap);
             mImageView.setImageDrawable(drawable);
-
+            img.setImageBitmap(mBitmap);
             //这里图片是方形的，可以用一个工具类处理成圆形（很多头像都是圆形，这种工具类网上很多不再详述）
 
         }

@@ -40,7 +40,8 @@ public class ItemFragment3 extends Fragment {
     String pi = null;
     String po =null;
     String pp = null;
-    String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
+    String user;
+
 
     public ItemFragment3() {
     }
@@ -48,7 +49,10 @@ public class ItemFragment3 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        if (myUser!=null){
+            user = myUser.getUsername();
+        }
 
 
     }
