@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
@@ -95,7 +96,7 @@ public class StartActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        MyUser myUser = new MyUser();
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
         if (myUser==null){
 
         }else {
@@ -153,7 +154,7 @@ public class StartActivity extends BaseActivity {
                                                                 mData4.add(s);
                                                             }
                                                             d = mData4.size();
-                                                            Log.i("d", "d:" + mData4.size());
+                                                            Log.i("d", "d:" + mData4.size()+user);
                                                             Utils.putIntValue(StartActivity.this, "a", a);
                                                             Utils.putIntValue(StartActivity.this, "b", b);
                                                             Utils.putIntValue(StartActivity.this, "c", c);
