@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -90,6 +91,7 @@ public class LandlordActivity extends BaseActivity {
     private long exitTime;
     private List<String> data = new LinkedList<>();
     private String dataPrice ;
+    private Handler handler;
     int a;
     int b;
     int c;
@@ -117,6 +119,7 @@ public class LandlordActivity extends BaseActivity {
 //            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
 //        }
+
 
 
 

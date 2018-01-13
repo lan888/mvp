@@ -30,6 +30,7 @@ import com.example.ian.mvp.adapter.StickyHeaderAdapter;
 import com.example.ian.mvp.mvp.model.Bill;
 import com.example.ian.mvp.mvp.model.MyUser;
 import com.example.ian.mvp.mvp.model.Rooms;
+import com.example.ian.mvp.utils.Utils;
 import com.example.ian.mvp.widget.OnValueChangeListener;
 import com.example.ian.mvp.widget.StickyHeaderListView;
 
@@ -141,6 +142,7 @@ public class BillsActivity extends AppCompatActivity {
                     for (Bill bill : list){
                         rows.add(bill);
                     }
+                    Utils.putIntValue(BillsActivity.this, "c",list.size());
                     mHandler.sendEmptyMessage(0);
                 }
             }

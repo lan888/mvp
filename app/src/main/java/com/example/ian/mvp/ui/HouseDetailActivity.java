@@ -44,6 +44,8 @@ public class HouseDetailActivity extends BaseActivity {
     TextView  allFloorInfo;
     TextView  desInfo;
     TextView  statusInfo;
+    TextView tenantNameInfo;
+    TextView rentTimeInfo;
     String address;
     @Override
     public void initControl() {
@@ -63,6 +65,8 @@ public class HouseDetailActivity extends BaseActivity {
         desInfo = findViewById(R.id.add_house_des);
         collectHouseBill_btn = findViewById(R.id.collectHouseBill_btn);
         statusInfo = findViewById(R.id.status);
+        tenantNameInfo = findViewById(R.id.tenant);
+        rentTimeInfo = findViewById(R.id.renter_name);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,7 +104,8 @@ public class HouseDetailActivity extends BaseActivity {
                         banner.start();
                         setText(r.getStatus(),r.getAddressInfo(),r.getType(),r.getAddressDetail(),
                                 r.getCreatedAt(),r.getPrice(),r.getContacts(),r.getArea(),r.getFloor(),
-                                r.getContactsTel(),r.getDirection(),r.getAllFloor(),r.getHouseDes());
+                                r.getContactsTel(),r.getDirection(),r.getAllFloor(),r.getHouseDes(),r.getTenant());
+                        Log.i("at",r.getUpdatedAt());
                     }
 
                     Log.i("bmob","成功：");
@@ -119,7 +124,7 @@ public class HouseDetailActivity extends BaseActivity {
     }
 
     private void setText(String status,String address,String type,String detail,String time,String price
-    ,String contacts,String area,String floor,String tel,String direction,String allFloor,String des){
+    ,String contacts,String area,String floor,String tel,String direction,String allFloor,String des,String tenantName){
         statusInfo.setText("出租状态："+status);
         addressInfo.setText("房屋名称:"+address);
         typeInfo.setText("房屋类型:"+type);
@@ -133,6 +138,8 @@ public class HouseDetailActivity extends BaseActivity {
         directionInfo.setText("房屋朝向:"+direction);
         allFloorInfo.setText("房屋总楼层:"+allFloor);
         desInfo.setText(des);
+        tenantNameInfo.setText("租客名称:"+tenantName);
+        //rentTimeInfo.setText("出租时间:"+rentTime);
     }
 
     class GlideImageLoader extends ImageLoader {

@@ -1,5 +1,6 @@
 package com.example.ian.mvp.ui.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.mvp.model.MyUser;
 import com.example.ian.mvp.mvp.model.Rooms;
+import com.example.ian.mvp.ui.HouseDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -143,35 +145,14 @@ public class ItemFragment2 extends Fragment {
                 houseDetail = itemView.findViewById(R.id.house_detail);
                 housePrice = itemView.findViewById(R.id.ll_house_price);
                 houseStatus = itemView.findViewById(R.id.house_status);
+                itemView.setOnClickListener(this);
             }
 
             @Override
             public void onClick(View view) {
-//                String roomInfo = mDatas.get(getAdapterPosition());
-//                BmobQuery query = new BmobQuery<Rooms>();
-//                query.addWhereEqualTo("room",roomInfo);
-//                query.setLimit(1);
-//                query.findObjects(new FindListener<Rooms>() {
-//                    @Override
-//                    public void done(List<Rooms> list, BmobException e) {
-//                        if(e==null){
-//                            Log.e("success","查询成功:"+list.size()+"条数据");
-//                            for (  Rooms r  : list){
-//                                pi = r.getAddressInfo();
-//                                po = r.getType();
-//                                pa = r.getStatus();
-//                                pp = r.getArea();
-//                            }
-//                            Toast.makeText(getActivity(),"房间号为："+pi+"\n户型："+po+"\n面积为："+
-//                                    pp+"㎡"+"\n是否已出租："+pa,Toast.LENGTH_SHORT).show();
-//                        }else {
-//                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-//                        }
-//                    }
-//
-//                });
-
-
+                Intent info = new Intent(getContext(), HouseDetailActivity.class);
+                info.putExtra("address",mHouseNameData.get(getAdapterPosition()));
+                getContext().startActivity(info);
             }
         }
     }

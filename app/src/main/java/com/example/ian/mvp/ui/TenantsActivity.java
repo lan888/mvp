@@ -91,7 +91,7 @@ public class TenantsActivity extends BaseActivity {
                         mTenantTelData.add(r.getPhone());
                         mTenantPhotoData.add(r.getPhoto());
                     }
-
+                    Utils.putIntValue(TenantsActivity.this, "b", mTenantNameData.size());
                     handler.sendEmptyMessage(0);
 
                     Log.i("bmob","成功："+mTenantNameData.size());

@@ -1,6 +1,8 @@
 package com.example.ian.mvp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -96,11 +98,15 @@ public class TenantsRvAdapter extends RecyclerView.Adapter<TenantsRvAdapter.View
            tenantTel = itemView.findViewById(R.id.renter_tel);
            tenantId = itemView.findViewById(R.id.renter_id);
            itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
-
+            Intent intent=new Intent();
+            intent.setAction(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + mTenantTelData.get(getAdapterPosition())));
+            context.startActivity(intent);
 
         }
     }
