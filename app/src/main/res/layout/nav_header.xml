@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
+    <com.example.ian.mvp.widget.CircleImageView
+        android:id="@+id/nav_civ"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="15dp"
+        app:civ_border_color="@android:color/white"
+        app:civ_border_width="2dp"
+        app:layout_anchor="@+id/middle_layout"
+        app:layout_anchorGravity="top"
+        app:layout_behavior="@string/appbar_circleimageview_behavior" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nav_user"
+        android:text="414545882@qq.com"
+        android:textSize="20sp"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/nav_civ"
+        android:layout_toEndOf="@+id/nav_civ"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="22dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mail"
+        android:layout_below="@+id/nav_civ"
+        android:text="Welcome to Renters"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="20sp"/>
+
+    <ImageView
+        android:id="@+id/nav_exit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/mail"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/exit"/>
+
+</RelativeLayout>

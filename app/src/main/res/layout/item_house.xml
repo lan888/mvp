@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_margin="5dp"
+    android:paddingBottom="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    >
+    <Button
+        android:id="@+id/del_btn"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:background="@mipmap/ic_delete1"
+        android:focusable="false"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/house_img"
+            android:layout_width="138dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/image_add"
+           />
+
+        <TextView
+            android:id="@+id/house_detail"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="150dp"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+           />
+
+        <TextView
+            android:id="@+id/house_name"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignLeft="@+id/house_detail"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/house_detail"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/house_status"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="150dp"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:textSize="20dp"
+            android:text="未出租"/>
+        <TextView
+            android:id="@+id/ll_house_price"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="250dp"
+            android:layout_width="150dp"
+            android:layout_height="50dp" />
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="300dp"
+            android:textSize="15dp"
+            android:text="元/月"/>
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>

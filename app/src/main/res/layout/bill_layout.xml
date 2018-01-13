@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/blue_text"
+        android:id="@+id/toolbar"
+        app:navigationIcon="@mipmap/back"
+        app:titleTextColor="@android:color/white">
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+        android:id="@+id/rl_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp">
+    <CheckBox
+        android:id="@+id/cb_check_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:button="@drawable/selector_checkbox"
+        android:paddingLeft="10dp"
+        android:text="全选" />
+
+    <TextView
+        android:id="@+id/tv_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cb_check_all"
+        android:layout_marginTop="10dp"
+        android:text="0个行程，共0.0元" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="#764B6A"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:text="收款"
+        android:textColor="@android:color/white" />
+
+
+
+</RelativeLayout>
+
+<com.example.ian.mvp.widget.StickyHeaderListView
+android:id="@+id/lv"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_above="@id/rl_next"
+android:layout_below="@+id/toolbar"/>
+
+<View
+android:layout_width="match_parent"
+android:layout_height="1px"
+android:layout_above="@id/rl_next"
+android:background="#764B6A" />
+
+
+
+
+
+
+
+
+</RelativeLayout>

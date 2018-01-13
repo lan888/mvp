@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.ian.mvp">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!--允许联网 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!--获取GSM（2g）、WCDMA（联通3g）等网络状态的信息  -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--获取wifi网络状态的信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--获取sd卡写的权限，用于文件上传和下载-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--允许读取手机状态 用于创建BmobInstallation-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!-- 解决Android 7.0 读写本地文件的问题 -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.ian.mvp.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+        <!-- 解决Android 7.0 读写本地文件的问题 -->
+        <activity android:name=".ui.StartActivity"
+                   android:theme="@style/AppTheme.Launcher"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".ui.ForgetNumActivity"/>
+        <activity android:name=".ui.LoginActivity"/>
+        <activity android:name=".ui.LandlordActivity"/>
+        <activity android:name=".ui.HouseActivity"/>
+        <activity android:name=".ui.AddHouseActivity"/>
+        <activity android:name=".ui.HouseDetailActivity"/>
+        <activity android:name=".ui.TenantActivity"/>
+        <activity android:name=".ui.RentHouseActivity"/>
+        <activity android:name=".ui.RentHouseDetailActivity"/>
+        <activity android:name=".ui.TenantsActivity"/>
+        <activity android:name=".ui.BillsActivity"/>
+        <activity android:name=".ui.SuccessAddActivity"/>
+        <activity android:name=".ui.RentBillsActivity"/>
+    </application>
+
+</manifest>

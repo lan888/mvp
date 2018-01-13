@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_house_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AddHouseActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/blue_text"
+        android:id="@+id/toolbar"
+        app:navigationIcon="@mipmap/back"
+        app:titleTextColor="@android:color/white">
+    </android.support.v7.widget.Toolbar>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scroll"
+            android:layout_above="@+id/bottom"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="出租状态:"
+                    />
+                <View
+                    android:id="@+id/line6"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/status"
+                    android:background="@color/account_line"
+                    />
+                <TextView
+                    android:id="@+id/tenant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/line6"
+                    android:text="租客名称:"
+                    />
+                <View
+                    android:id="@+id/line7"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/tenant"
+                    android:background="@color/account_line"
+                    />
+                <TextView
+                    android:id="@+id/rent_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/tenant"
+                    android:text="出租时间:"
+                    />
+                <View
+                    android:id="@+id/line5"
+                    android:layout_height="20px"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/rent_time"
+                    android:background="@color/gray_bg"
+                    />
+                <com.youth.banner.Banner
+                    android:id="@+id/gw"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/line5"
+                    android:layout_height="210dp" />
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_below="@id/gw"
+                    android:background="@color/account_line"
+                    />
+                <TextView
+                    android:id="@+id/add_house_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/line"
+                    android:text="房屋名称:"
+                    />
+
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_address"
+                    />
+                <TextView
+                    android:id="@+id/add_house_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/add_house_address"
+                    android:textSize="20sp"
+                    android:text="房屋类型:"
+                    />
+
+
+                <View
+                    android:id="@+id/line8"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_type"
+                    />
+                <TextView
+                    android:id="@+id/add_house_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/line8"
+                    android:textSize="20sp"
+                    android:text="房屋更新时间:"
+                    />
+                <View
+                    android:id="@+id/line9"
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_time"
+                    />
+                <TextView
+                    android:id="@+id/add_house_address_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/line9"
+                    android:textSize="20sp"
+                    android:lines="2"
+                    android:text="详细地址:"
+                    />
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_height="20px"
+                    android:layout_width="match_parent"
+                    android:background="@color/gray_bg"
+                    android:layout_below="@id/add_house_address_detail"
+                    />
+                <TextView
+                    android:id="@+id/add_house_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="月租金:"
+                    android:layout_below="@id/line1"
+
+                    />
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_height="20px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/gray_bg"
+                    android:layout_below="@id/add_house_price"
+                    />
+                <TextView
+                    android:id="@+id/add_house_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/line2"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp"
+                    android:text="联系人:"
+                    />
+
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_contacts"
+                    />
+                <TextView
+                    android:id="@+id/add_house_contacts_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/add_house_contacts"
+                    android:text="联系人电话:"
+                    />
+
+                <View
+                    android:id="@+id/line3"
+                    android:layout_height="20px"
+                    android:layout_width="match_parent"
+                    android:background="@color/gray_bg"
+                    android:layout_below="@id/add_house_contacts_tel"
+                    />
+                <TextView
+                    android:id="@+id/add_house_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/line3"
+                    android:text="房屋面积:"
+                    />
+
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_area"
+                    />
+                <TextView
+                    android:id="@+id/add_house_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/add_house_area"
+                    android:text="房间所在楼层:"
+                    />
+
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_floor"
+                    />
+                <TextView
+                    android:id="@+id/add_house_all_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/add_house_floor"
+                    android:text="房屋总楼层:"
+                    />
+
+                <View
+                    android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_all_floor"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_house_direction"
+                    android:text="房屋朝向:"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/add_house_all_floor"
+
+                    />
+
+                <View
+                    android:id="@+id/line4"
+                    android:layout_height="20px"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/gray_bg"
+                    android:layout_below="@id/add_house_direction"
+                    />
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/line4"
+                    android:text="房屋概述"
+                    android:textSize="20dp"
+                    />
+                <TextView
+                    android:id="@+id/add_house_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/tv"
+                    android:lines="3"
+                    android:textSize="20dp"
+                    />
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_text"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+
+        >
+
+
+        <Button
+            android:id="@+id/collectHouseBill_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_stroke_roundredcir"
+            android:text="收款"
+            android:textColor="@color/colorBg"/>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

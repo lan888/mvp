@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/view"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_gravity="center"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_margin="5dp"
+    android:paddingBottom="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardUseCompatPadding="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.example.ian.mvp.widget.CircleImageView
+            android:id="@+id/renter_img"
+            android:layout_width="88dp"
+            android:layout_height="88dp"
+            android:src="@drawable/image_add"
+            />
+
+        <TextView
+            android:id="@+id/renter_tel"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="100dp"
+            android:layout_width="280dp"
+            android:layout_height="50dp"
+            android:text="手机号码"
+            android:textSize="20sp"
+            />
+        <TextView
+            android:id="@+id/renter_name"
+            android:layout_marginLeft="120dp"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:textSize="20sp"
+            />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toRightOf="@+id/renter_name"
+            android:id="@+id/renter_gender"
+            android:src="@drawable/male"
+            />
+        <TextView
+            android:id="@+id/renter_id"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:text="身份证号码"
+            android:textSize="20dp"
+            android:layout_height="50dp" />
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>

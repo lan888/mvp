@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sp_data">
+        <item>一室一厅一卫</item>
+        <item>两室一厅两卫</item>
+        <item>两室一厅三卫</item>
+        <item>三室一厅三卫</item>
+        <item>三室一厅四卫</item>
+        <item>三室两厅四卫</item>
+    </string-array>
+</resources>

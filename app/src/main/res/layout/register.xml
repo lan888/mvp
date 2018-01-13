@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.example.ian.mvp.widget.RoundImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/admin_pic_reg"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:src="@mipmap/admin_photo"/>
+    <EditText
+        android:id="@+id/admin_register_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/input_box"
+        android:gravity="center"
+        android:hint="请填写手机号码" />
+
+    <EditText
+        android:id="@+id/admin_register_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/input_box"
+        android:gravity="center"
+        android:hint="请输入账户" />
+
+    <EditText
+        android:id="@+id/admin_register_first_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/input_box"
+        android:gravity="center"
+        android:hint="请输入密码"
+        android:inputType="numberPassword" />
+
+    <EditText
+        android:id="@+id/admin_register_second_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@mipmap/input_box"
+        android:gravity="center"
+        android:hint="请确认密码"
+        android:inputType="numberPassword" />
+    <EditText
+        android:id="@+id/admin_register_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@mipmap/input_box"
+        android:gravity="center"
+        android:hint="请填写电子邮箱" />
+
+</LinearLayout>

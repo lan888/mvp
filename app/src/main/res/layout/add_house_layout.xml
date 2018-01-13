@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_house_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.AddHouseActivity">
+    <android.support.v7.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/blue_text"
+        android:id="@+id/toolbar"
+        app:navigationIcon="@mipmap/back"
+        app:titleTextColor="@android:color/white">
+    </android.support.v7.widget.Toolbar>
+    <GridView
+        android:id="@+id/gw"
+        android:numColumns="4"
+        android:columnWidth="120dp"
+        android:layout_width="match_parent"
+        android:layout_height="88dp" />
+
+    <View  android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="@color/account_line"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/scroll"
+            android:layout_above="@+id/bottom"
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/add_house_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="房屋名称:"
+                    />
+
+                <EditText
+                    android:id="@+id/add_house_addressInfo"
+                    android:layout_toRightOf="@+id/add_house_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:hint="请输入房屋名称地址"
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_addressInfo"
+                    />
+                <TextView
+                    android:id="@+id/add_house_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+
+                    android:layout_below="@+id/add_house_address"
+                    android:textSize="20sp"
+                    android:text="房屋类型"
+                    />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/add_house_typeInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/add_house_type"
+                    android:layout_toRightOf="@+id/add_house_type"
+                    android:layout_below="@+id/add_house_address"
+                    android:gravity="center"
+                    android:entries="@array/sp_data"
+                    />
+
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_typeInfo"
+                    />
+                <TextView
+                    android:id="@+id/add_house_address_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/add_house_type"
+                    android:textSize="20sp"
+                    android:text="详细地址:"
+                    />
+
+                <EditText
+                    android:id="@+id/add_house_address_detailInfo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="请输入房屋详细地址"
+                    android:gravity="start"
+                    android:background="@null"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/add_house_type"
+                    android:layout_toRightOf="@id/add_house_address_detail"
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_address_detailInfo1"
+                    />
+                <TextView
+                    android:id="@+id/add_house_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:text="月租金:"
+                    android:layout_below="@id/add_house_address_detailInfo1"
+
+                    />
+
+                <EditText
+                    android:id="@+id/add_house_priceInfo"
+                    android:layout_width="match_parent"
+                    android:background="@null"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/add_house_price"
+                    android:layout_toEndOf="@+id/add_house_price"
+                    android:layout_below="@id/add_house_address_detailInfo1"
+                    android:hint="请输入月租金"
+
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_price"
+                    />
+                <TextView
+                    android:id="@+id/add_house_contacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/add_house_price"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="15dp"
+                    android:textSize="20sp"
+                    android:text="联系人:"
+                    />
+                <EditText
+                    android:id="@+id/add_house_contactsInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/add_house_contacts"
+                    android:layout_below="@id/add_house_priceInfo"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="18dp"
+                    android:background="@null"
+                    android:hint="请输入房屋联系人"
+
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_contacts"
+                    />
+                <TextView
+                    android:id="@+id/add_house_contacts_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/add_house_contacts"
+                    android:text="联系人电话"
+                    />
+
+                <EditText
+                    android:id="@+id/add_house_contacts_telInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/add_house_contacts_tel"
+                    android:layout_below="@+id/add_house_contacts"
+                    android:background="@null"
+                    android:hint="请输入房屋联系人电话"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:maxLines="1"
+
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_contacts_tel"
+                    />
+                <TextView
+                    android:id="@+id/add_house_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/add_house_contacts_tel"
+                    android:text="房屋面积"
+                    />
+
+                <EditText
+                    android:id="@+id/add_house_areaInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/add_house_area"
+                    android:layout_toEndOf="@+id/add_house_area"
+                    android:layout_below="@id/add_house_contacts_tel"
+                    android:background="@null"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="请输入房屋面积/㎡"/>
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_area"
+                    />
+                <TextView
+                    android:id="@+id/add_house_floor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/add_house_area"
+                    android:text="房间所在楼层"
+                    />
+                <EditText
+                    android:id="@+id/add_house_floorInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/add_house_area"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/add_house_floor"
+                    android:hint="请输入房间所在楼层"
+                    android:background="@null"
+                   />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_floorInfo"
+                    />
+                <TextView
+                    android:id="@+id/add_house_all_floor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20sp"
+                    android:layout_below="@id/add_house_floorInfo"
+                    android:text="房屋总楼层"
+                    />
+                <EditText
+                    android:id="@+id/add_house_all_floorInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:hint="请输入房屋总楼层"
+                    android:layout_below="@+id/add_house_floorInfo"
+                    android:layout_toRightOf="@+id/add_house_all_floor"
+                    />
+                <View  android:layout_height="1px"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_all_floor"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_house_direction"
+                    android:text="房屋朝向"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/add_house_all_floor"
+
+                    />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_house_directionInfo"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:hint="请输入房屋朝向"
+                    android:layout_toRightOf="@id/add_house_direction"
+                    android:layout_below="@id/add_house_all_floor"
+
+                    />
+                <View
+                    android:layout_height="1px"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/account_line"
+                    android:layout_below="@id/add_house_direction"
+                    />
+                <TextView
+                    android:id="@+id/add_house_des"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/add_house_direction"
+                    android:text="房屋概述"
+                    android:textSize="20dp"
+                    />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:id="@+id/add_house_desInfo"
+                    android:layout_below="@+id/add_house_des"
+                    android:gravity="start"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@null"
+                    android:hint="请输入房屋概述内容"
+                    />
+
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_text"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+
+        >
+
+
+        <Button
+            android:id="@+id/add_house_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/colorPrimary"
+            android:text="保存"
+            android:textColor="@color/colorBg"/>
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
