@@ -3,6 +3,8 @@ package com.example.ian.mvp.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -13,6 +15,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +45,10 @@ import com.jaeger.library.StatusBarUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by Ian on 2018/1/10 0010.
@@ -66,12 +72,15 @@ public class TenantActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
-    MyUser user = BmobUser.getCurrentUser(MyUser.class);
+
+    MyUser user = MyUser.getCurrentUser(MyUser.class);
     int d;
-    final Bill b1= new Bill() ;
+    private Handler mHandler;
+    private long exitTime;
     @Override
     public void initControl() {
         setContentView(R.layout.activity_demo2);
+
     }
 
     @Override
@@ -93,11 +102,23 @@ public class TenantActivity extends BaseActivity {
         mNav =  findViewById(R.id.nav_view);
         mNavIv= findViewById(R.id.uc_nav);
 
-        fragments = getFragments();
-        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments,getNames());
 
-        mTablayout.setTabData(mTabEntities);
-        mViewPager.setAdapter(myFragmentPagerAdapter);
+        mHandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what){
+                    case 1:
+                        fragments = getFragments();
+                        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments, getNames());
+                        mViewPager.setAdapter(myFragmentPagerAdapter);
+                        mTablayout.setTabData(mTabEntities);
+                        break;
+                }
+
+
+            }
+        };
         mToolBar.setNavigationIcon(R.mipmap.ic_menu);
         final View headerView = mNav.getHeaderView(0);
         nUser = headerView.findViewById(R.id.nav_user);
@@ -109,7 +130,7 @@ public class TenantActivity extends BaseActivity {
         mMsgTv.setText("交房租");
 
 
-        MyUser user = MyUser.getCurrentUser(MyUser.class);
+
 
         if (user == null){
             Toast.makeText(this,"请重新登陆",Toast.LENGTH_SHORT).show();
@@ -127,7 +148,6 @@ public class TenantActivity extends BaseActivity {
                     mAvater.setTag(url);
                     mZoomIv.setTag(null);
                     Glide.with(this).load(url).into(mZoomIv);
-                    mZoomIv.setTag(url);
                     Glide.with(this).load(url).into(mImg);
                 }
 
@@ -141,7 +161,31 @@ public class TenantActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        final ArrayList<String> mData4 = new ArrayList<String>();
+        if (user==null){
 
+        }else {
+            BmobQuery<Bill> query = new BmobQuery<Bill>();
+            query.addWhereEqualTo("tenant", user.getUsername());
+            query.findObjects(new FindListener<Bill>() {
+                @Override
+                public void done(List<Bill> list, BmobException e) {
+                    if (e == null) {
+                        for (Bill r : list) {
+                            String s = r.getRoom();
+                            mData4.add(s);
+                        }
+                        d = mData4.size();
+                        Log.i("d1", "d:" + d);
+                        mHandler.sendEmptyMessage(1);
+
+
+                    } else {
+                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -338,19 +382,14 @@ public class TenantActivity extends BaseActivity {
     }
 
     public String[] getNames() {
-        String[] mName3 = new String[]{"账单"};
+        String[] mName1 = new String[]{"账单"};
+     //   d = Utils.getIntValue(TenantActivity.this,"d");
 
-
-//        a = Utils.getIntValue(LandlordActivity.this,"a");
-//        b = Utils.getIntValue(LandlordActivity.this,"b");
-//        c = Utils.getIntValue(LandlordActivity.this,"c");
-          d = Utils.getIntValue(TenantActivity.this,"d");
-
-        for (String str : mName3) {
+        for (String str : mName1) {
             mTabEntities.add(new TabEntity(String.valueOf(d), str));
-
+            Log.i("d2", "d:" + d);
         }
-        return mName3;
+        return mName1;
     }
 
 
@@ -358,5 +397,24 @@ public class TenantActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ItemFragment4());
         return fragments;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                //按返回键不退出程序，仅仅返回桌面
+                Intent setIntent = new Intent(Intent.ACTION_MAIN);
+                setIntent.addCategory(Intent.CATEGORY_HOME);
+                setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(setIntent);
+            }
+            return true;
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 }

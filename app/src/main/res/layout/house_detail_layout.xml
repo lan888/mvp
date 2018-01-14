@@ -69,7 +69,7 @@
                     android:background="@color/account_line"
                     />
                 <TextView
-                    android:id="@+id/rent_time"
+                    android:id="@+id/tenant_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -83,7 +83,7 @@
                     android:id="@+id/line5"
                     android:layout_height="20px"
                     android:layout_width="match_parent"
-                    android:layout_below="@id/rent_time"
+                    android:layout_below="@id/tenant_time"
                     android:background="@color/gray_bg"
                     />
                 <com.youth.banner.Banner

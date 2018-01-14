@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.mvp.model.Bill;
@@ -40,7 +39,7 @@ public class ItemFragment4 extends Fragment {
     String pi = null;
     String po =null;
     String pp = null;
-    String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
+    String user ;
 
     public ItemFragment4() {
     }
@@ -49,7 +48,10 @@ public class ItemFragment4 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        if (myUser!=null){
+            user = myUser.getUsername();
+        }
 
     }
 
@@ -148,27 +150,28 @@ public class ItemFragment4 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                String roomInfo = mDataTime.get(getAdapterPosition()) ;
-                BmobQuery query = new BmobQuery<Bill>();
-                query.addWhereEqualTo("createdAt",roomInfo);
-                query.setLimit(1);
-                query.findObjects(new FindListener<Bill>() {
-                    @Override
-                    public void done(List<Bill> list, BmobException e) {
-                        if(e==null){
-                            Log.e("success","查询成功:"+list.size()+"条数据");
-                            for (  Bill r  : list){
-                                pi = r.getRoom();
-                                po = r.getCreatedAt();
-                                pp = r.getBill();
-                            }
-                            Toast.makeText(getActivity(),"房间号为："+pi+"\n时间："+po+"\n上月房租金额为："+pp,Toast.LENGTH_SHORT).show();
-                        }else {
-                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                        }
-                    }
-
-                });
+//                String roomInfo = mDataTime.get(getAdapterPosition()) ;
+//                Log.e("data","查询成功:"+roomInfo);
+//                BmobQuery query = new BmobQuery<Bill>();
+//                query.addWhereEqualTo("createdAt",roomInfo);
+//                query.setLimit(1);
+//                query.findObjects(new FindListener<Bill>() {
+//                    @Override
+//                    public void done(List<Bill> list, BmobException e) {
+//                        if(e==null){
+//                            Log.e("success","查询成功:"+list.size()+"条数据");
+//                            for (  Bill r  : list){
+//                                pi = r.getRoom();
+//                                po = r.getCreatedAt();
+//                                pp = r.getBill();
+//                            }
+//                            Toast.makeText(getActivity(),"房间号为："+pi+"\n时间："+po+"\n上月房租金额为："+pp,Toast.LENGTH_SHORT).show();
+//                        }else {
+//                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+//                        }
+//                    }
+//
+//                });
 
 
                 }

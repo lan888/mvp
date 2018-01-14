@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -36,6 +37,7 @@ import com.example.ian.mvp.base.BaseActivity;
 import com.example.ian.mvp.behavior.AppBarLayoutOverScrollViewBehavior;
 import com.example.ian.mvp.mvp.model.Bill;
 import com.example.ian.mvp.mvp.model.MyUser;
+import com.example.ian.mvp.mvp.model.Renters;
 import com.example.ian.mvp.mvp.model.Rooms;
 import com.example.ian.mvp.mvp.model.TabEntity;
 import com.example.ian.mvp.ui.Fragment.ItemFragment1;
@@ -87,7 +89,7 @@ public class LandlordActivity extends BaseActivity {
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
-    private ArrayList<String> mHouseNameData;
+
     private long exitTime;
     private List<String> data = new LinkedList<>();
     private String dataPrice ;
@@ -95,6 +97,7 @@ public class LandlordActivity extends BaseActivity {
     int a;
     int b;
     int c;
+
 
     final Bill b1= new Bill() ;
     String user ;
@@ -148,8 +151,14 @@ public class LandlordActivity extends BaseActivity {
 
         fragments = getFragments();
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments,getNames());
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                mTablayout.setTabData(mTabEntities);
+            }
+        };
 
-        mTablayout.setTabData(mTabEntities);
         mViewPager.setAdapter(myFragmentPagerAdapter);
         mToolBar.setNavigationIcon(R.mipmap.ic_menu);
         final View headerView = mNav.getHeaderView(0);
@@ -177,7 +186,6 @@ public class LandlordActivity extends BaseActivity {
                     mAvater.setTag(url);
                     mZoomIv.setTag(null);
                     Glide.with(LandlordActivity.this).load(url).into(mZoomIv);
-                    mZoomIv.setTag(url);
                     Glide.with(LandlordActivity.this).load(url).into(mImg);
                 }
 
@@ -191,6 +199,68 @@ public class LandlordActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        MyUser myUser = BmobUser.getCurrentUser(MyUser.class);
+        if (myUser==null){
+
+        }else {
+            final String user = myUser.getUsername();
+            final ArrayList<String> mData1 = new ArrayList<String>();
+            final ArrayList<String> mData2 = new ArrayList<String>();
+            final ArrayList<String> mData3 = new ArrayList<String>();
+            BmobQuery<Rooms> query = new BmobQuery<Rooms>();
+            query.addWhereEqualTo("user",user);
+            query.findObjects(new FindListener<Rooms>() {
+                @Override
+                public void done(List<Rooms> list, BmobException e) {
+                    if (e == null) {
+
+                        for (Rooms r : list) {
+                            String s = r.getAddressInfo();
+                            mData1.add(s);
+                        }
+                        Log.i("a", "a:" + mData1.size());
+                        a = mData1.size();
+
+                        BmobQuery<Renters> query = new BmobQuery<Renters>();
+                        query.addWhereEqualTo("landlord", user);
+                        query.findObjects(new FindListener<Renters>() {
+                            @Override
+                            public void done(List<Renters> list, BmobException e) {
+                                if (e == null) {
+                                    for (Renters r : list) {
+                                        String s = r.getName();
+                                        mData2.add(s);
+                                    }
+                                    Log.i("b", "b:" + mData2.size());
+                                    b = mData2.size();
+                                    BmobQuery<Bill> query = new BmobQuery<Bill>();
+                                    query.addWhereEqualTo("user", user);
+                                    query.findObjects(new FindListener<Bill>() {
+                                        @Override
+                                        public void done(List<Bill> list, BmobException e) {
+                                            if (e == null) {
+                                                for (Bill r : list) {
+                                                    String s = r.getRoom();
+                                                    mData3.add(s);
+                                                }
+                                                Log.i("c", "c:" + mData3.size());
+                                                c = mData3.size();
+                                                handler.sendEmptyMessage(0);
+
+                                            } else {
+                                                Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
 
         BmobQuery<Rooms> query = new BmobQuery<Rooms>();
         query.addWhereEqualTo("user",user);
@@ -545,7 +615,11 @@ public class LandlordActivity extends BaseActivity {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                this.finish();
+                //按返回键不退出程序，仅仅返回桌面
+                Intent setIntent = new Intent(Intent.ACTION_MAIN);
+                setIntent.addCategory(Intent.CATEGORY_HOME);
+                setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(setIntent);
             }
             return true;
         }

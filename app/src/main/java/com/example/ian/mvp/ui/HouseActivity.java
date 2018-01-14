@@ -55,7 +55,7 @@ public class HouseActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Utils.start_Activity(HouseActivity.this,LandlordActivity.class);
             }
         });
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

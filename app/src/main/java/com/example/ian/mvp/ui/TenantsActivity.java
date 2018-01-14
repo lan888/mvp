@@ -50,7 +50,7 @@ public class TenantsActivity extends BaseActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.finish(TenantsActivity.this);
+                Utils.start_Activity(TenantsActivity.this,LandlordActivity.class);
             }
         });
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

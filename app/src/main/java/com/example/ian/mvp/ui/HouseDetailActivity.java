@@ -66,7 +66,7 @@ public class HouseDetailActivity extends BaseActivity {
         collectHouseBill_btn = findViewById(R.id.collectHouseBill_btn);
         statusInfo = findViewById(R.id.status);
         tenantNameInfo = findViewById(R.id.tenant);
-        rentTimeInfo = findViewById(R.id.renter_name);
+        rentTimeInfo = findViewById(R.id.tenant_time);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,7 +104,7 @@ public class HouseDetailActivity extends BaseActivity {
                         banner.start();
                         setText(r.getStatus(),r.getAddressInfo(),r.getType(),r.getAddressDetail(),
                                 r.getCreatedAt(),r.getPrice(),r.getContacts(),r.getArea(),r.getFloor(),
-                                r.getContactsTel(),r.getDirection(),r.getAllFloor(),r.getHouseDes(),r.getTenant());
+                                r.getContactsTel(),r.getDirection(),r.getAllFloor(),r.getHouseDes(),r.getTenant(),r.getUpdatedAt());
                         Log.i("at",r.getUpdatedAt());
                     }
 
@@ -124,7 +124,7 @@ public class HouseDetailActivity extends BaseActivity {
     }
 
     private void setText(String status,String address,String type,String detail,String time,String price
-    ,String contacts,String area,String floor,String tel,String direction,String allFloor,String des,String tenantName){
+    ,String contacts,String area,String floor,String tel,String direction,String allFloor,String des,String tenantName,String rentTime){
         statusInfo.setText("出租状态："+status);
         addressInfo.setText("房屋名称:"+address);
         typeInfo.setText("房屋类型:"+type);
@@ -139,7 +139,7 @@ public class HouseDetailActivity extends BaseActivity {
         allFloorInfo.setText("房屋总楼层:"+allFloor);
         desInfo.setText(des);
         tenantNameInfo.setText("租客名称:"+tenantName);
-        //rentTimeInfo.setText("出租时间:"+rentTime);
+        rentTimeInfo.setText("出租时间:"+rentTime);
     }
 
     class GlideImageLoader extends ImageLoader {
