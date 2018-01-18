@@ -3,6 +3,7 @@ package com.example.ian.mvp.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class RentHouseRvAdapter extends RecyclerView.Adapter<RentHouseRvAdapter.
         }else {
              v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_item, parent, false);
         }
-
+        Log.i("boolean","hasNoData"+hasNoData);
             ViewHolder viewHolder = new ViewHolder(v);
             return viewHolder;
 

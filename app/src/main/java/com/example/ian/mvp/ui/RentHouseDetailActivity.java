@@ -243,7 +243,9 @@ public class RentHouseDetailActivity extends BaseActivity {
 
 
                                         Toast.makeText(RentHouseDetailActivity.this, "已成功租房", Toast.LENGTH_SHORT).show();
-
+                                        Intent info = new Intent(context, RentHouseActivity.class);
+                                        info.putExtra("user",user.getUsername());
+                                        context.startActivity(info);
 
                                     } else {
                                         Toast.makeText(RentHouseDetailActivity.this, "请填写合法的身份证号码", Toast.LENGTH_SHORT).show();

@@ -149,17 +149,19 @@ public class LandlordActivity extends BaseActivity {
         mNav =  findViewById(R.id.nav_view);
         mNavIv= findViewById(R.id.uc_nav);
 
-        fragments = getFragments();
-        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments,getNames());
+
         handler = new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
+                fragments = getFragments();
+                MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments,getNames());
+                mViewPager.setAdapter(myFragmentPagerAdapter);
                 mTablayout.setTabData(mTabEntities);
             }
         };
 
-        mViewPager.setAdapter(myFragmentPagerAdapter);
+
         mToolBar.setNavigationIcon(R.mipmap.ic_menu);
         final View headerView = mNav.getHeaderView(0);
         nUser = headerView.findViewById(R.id.nav_user);
@@ -581,9 +583,7 @@ public class LandlordActivity extends BaseActivity {
 
         // c = getData3();
         Log.i("b1","b:"+b);
-        a = Utils.getIntValue(LandlordActivity.this,"a");
-        b = Utils.getIntValue(LandlordActivity.this,"b");
-        c = Utils.getIntValue(LandlordActivity.this,"c");
+
 
         for (String str : mName1) {
             mTabEntities.add(new TabEntity(String.valueOf(a), str));
