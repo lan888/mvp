@@ -93,6 +93,7 @@ public class LandlordActivity extends BaseActivity {
     private long exitTime;
     private List<String> data = new LinkedList<>();
     private String dataPrice ;
+    private String dataTenant;
     private Handler handler;
     int a;
     int b;
@@ -356,6 +357,7 @@ public class LandlordActivity extends BaseActivity {
                                     if (e == null) {
                                         for (Rooms r : list) {
                                             dataPrice = r.getPrice();
+                                            dataTenant = r.getTenant();
 
                                         }
                                         double waterBillInfo1 = Double.parseDouble(waterBill.getText().toString());
@@ -373,6 +375,7 @@ public class LandlordActivity extends BaseActivity {
                                                 b1.setElectricityBill(electricityBillInfo);
                                                 b1.setMonth(str);
                                                 b1.setUser(user);
+                                                b1.setTenant(dataTenant);
                                                 b1.setStatus("未缴费");
                                                 b1.save(new SaveListener<String>() {
                                                     @Override
