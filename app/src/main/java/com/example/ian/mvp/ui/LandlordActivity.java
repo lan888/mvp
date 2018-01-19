@@ -317,7 +317,7 @@ public class LandlordActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (data.size()==0){
-                    Utils.showShortToast(LandlordActivity.this,"请先添加房源");
+                    Utils.showShortToast(LandlordActivity.this,"未有已出租的房源，请努力哈");
                 }else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(LandlordActivity.this);
                     LayoutInflater factory = LayoutInflater.from(LandlordActivity.this);
