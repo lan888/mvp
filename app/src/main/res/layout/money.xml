@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_arrow_drop_down_black"
+        android:layout_toRightOf="@+id/nice_spinner"
+        android:layout_toEndOf="@+id/nice_spinner"
+        />
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/nice_spinner"
         android:layout_width="168dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="@drawable/shape_white_frame"
          />
@@ -19,10 +26,8 @@
         android:id="@+id/waterBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/nice_spinner"
         android:background="@mipmap/input_box"
         android:gravity="center"
         android:hint="请填写水费"
@@ -31,10 +36,8 @@
         android:id="@+id/electricityBill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/waterBill"
         android:background="@mipmap/input_box"
         android:gravity="center"
         android:hint="请填写电费"
@@ -42,4 +45,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

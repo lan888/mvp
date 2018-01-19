@@ -1,6 +1,7 @@
 package com.example.ian.mvp.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
@@ -14,19 +15,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.adapter.MyFragmentPagerAdapter;
+import com.example.ian.mvp.adapter.SpinnerAdapter;
 import com.example.ian.mvp.base.BaseActivity;
 import com.example.ian.mvp.behavior.AppBarLayoutOverScrollViewBehavior;
 import com.example.ian.mvp.mvp.model.Bill;
@@ -43,12 +48,14 @@ import com.example.mylibrary.listener.OnTabSelectListener;
 import com.jaeger.library.StatusBarUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by Ian on 2018/1/10 0010.
@@ -70,13 +77,16 @@ public class TenantActivity extends BaseActivity {
     private NavigationView mNav;
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
+    private List<String> data = new LinkedList<>();
     private List<Fragment> fragments;
     private int lastState = 1;
+    private String billId ;
 
     MyUser user = MyUser.getCurrentUser(MyUser.class);
     int d;
     private Handler mHandler;
     private long exitTime;
+    Bill b1= new Bill() ;
     @Override
     public void initControl() {
         setContentView(R.layout.activity_demo2);
@@ -185,6 +195,22 @@ public class TenantActivity extends BaseActivity {
                     }
                 }
             });
+            BmobQuery<Bill> query1 = new BmobQuery<Bill>();
+            query1.addWhereEqualTo("tenant", user.getUsername());
+            query1.addWhereEqualTo("status","未缴费");
+            query1.findObjects(new FindListener<Bill>() {
+                @Override
+                public void done(List<Bill> list, BmobException e) {
+                    if (e == null) {
+                        for (Bill r : list) {
+                            data.add(r.getRoom()+"\n"+r.getMonth());
+                        }
+
+                    } else {
+                        Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                    }
+                }
+            });
         }
     }
 
@@ -199,7 +225,74 @@ public class TenantActivity extends BaseActivity {
         mMsgTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.showShortToast(TenantActivity.this,"功能待开发~~");
+                if (data.size()==0){
+                    Utils.showShortToast(TenantActivity.this,"还没有需要交款的账单");
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TenantActivity.this);
+                    LayoutInflater factory = LayoutInflater.from(TenantActivity.this);
+                    final View textEntryView = factory.inflate(R.layout.pay,null);
+                    builder.setTitle("交款");
+                    builder.setView(textEntryView);
+
+                    final Spinner address = textEntryView.findViewById(R.id.nice_spinner);
+                    SpinnerAdapter spinnerAdapter = new SpinnerAdapter(TenantActivity.this,data);
+                    address.setAdapter(spinnerAdapter);
+
+
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                        }
+                    });
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            final String billInfo = data.get(address.getSelectedItemPosition());
+                            String bill[] = billInfo.split("\n");
+                            Log.i("addressInfo",billInfo);
+                            BmobQuery<Bill> query = new BmobQuery<Bill>();
+                            query.addWhereEqualTo("room",bill[0]);
+                            query.addWhereEqualTo("month",bill[1]);
+                            query.findObjects(new FindListener<Bill>(){
+                                @Override
+                                public void done(List<Bill> list, BmobException e) {
+                                    if (e == null) {
+                                        for( Bill b : list) {
+                                            billId = b.getObjectId();
+
+                                        }
+                                                b1.setStatus("已缴费");
+                                                b1.update(billId,new UpdateListener() {
+                                                    @Override
+                                                    public void done(BmobException e) {
+                                                        if (e == null) {
+                                                            Log.e("success", "更新成功:" + b1.getUpdatedAt());
+                                                            Utils.showShortToast(TenantActivity.this,"缴费成功");
+                                                            Utils.start_Activity(TenantActivity.this,RentBillsActivity.class);
+                                                        } else {
+                                                            Log.e("succes", "更新失败：" + e.getMessage());
+                                                        }
+                                                    }
+                                                });
+
+
+                                        Log.i("bmob","成功："+data.size());
+                                    }else {
+                                        Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                                    }
+                                }
+
+                            });
+
+
+                        }
+
+                    });
+                    builder.create().show();
+                }
             }
         });
         mExit.setOnClickListener(new View.OnClickListener() {
