@@ -51,6 +51,7 @@ import com.example.mylibrary.CommonTabLayout;
 import com.example.mylibrary.listener.CustomTabEntity;
 import com.example.mylibrary.listener.OnTabSelectListener;
 import com.jaeger.library.StatusBarUtil;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public class LandlordActivity extends BaseActivity {
     int a;
     int b;
     int c;
-
+    LoadingDialog ld;
 
     final Bill b1= new Bill() ;
     String user ;
@@ -149,7 +150,9 @@ public class LandlordActivity extends BaseActivity {
         mDrawerLayout =  findViewById(R.id.drawer_layout);
         mNav =  findViewById(R.id.nav_view);
         mNavIv= findViewById(R.id.uc_nav);
-
+        ld = new LoadingDialog(LandlordActivity.this);
+        ld.show();
+        ld.setLoadingText("载入中");
 
         handler = new Handler(){
             @Override
@@ -159,6 +162,7 @@ public class LandlordActivity extends BaseActivity {
                 MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments,getNames());
                 mViewPager.setAdapter(myFragmentPagerAdapter);
                 mTablayout.setTabData(mTabEntities);
+                ld.close();
             }
         };
 

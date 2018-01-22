@@ -30,9 +30,9 @@ import com.example.ian.mvp.adapter.StickyHeaderAdapter;
 import com.example.ian.mvp.mvp.model.Bill;
 import com.example.ian.mvp.mvp.model.MyUser;
 import com.example.ian.mvp.mvp.model.Rooms;
-import com.example.ian.mvp.utils.Utils;
 import com.example.ian.mvp.widget.OnValueChangeListener;
 import com.example.ian.mvp.widget.StickyHeaderListView;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -70,6 +70,7 @@ public class BillsActivity extends AppCompatActivity {
     private String dataPrice ;
     private boolean isOnLoadMore = false;
     private int count = 0;
+    LoadingDialog ld;
     String user = BmobUser.getCurrentUser(MyUser.class).getUsername();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,7 +89,9 @@ public class BillsActivity extends AppCompatActivity {
 
         initListView();
         initChechBox();
-
+        ld = new LoadingDialog(BillsActivity.this);
+        ld.show();
+        ld.setLoadingText("载入中");
         BmobQuery<Rooms> query = new BmobQuery<Rooms>();
         query.addWhereEqualTo("user",user);
         query.addWhereEqualTo("status","已出租");
@@ -117,6 +120,7 @@ public class BillsActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             mListView.setAdapter(mAdapter = new SectionAdapter(BillsActivity.this, rows));
+            ld.close();
             mAdapter.setOnValueChangedListener(new OnValueChangeListener() {
                 @Override
                 public void onChange(int totalCount, double totalAmount, boolean isCheckAll) {
@@ -142,7 +146,7 @@ public class BillsActivity extends AppCompatActivity {
                     for (Bill bill : list){
                         rows.add(bill);
                     }
-                    Utils.putIntValue(BillsActivity.this, "c",list.size());
+
                     mHandler.sendEmptyMessage(0);
                 }
             }

@@ -46,6 +46,7 @@ import com.example.mylibrary.CommonTabLayout;
 import com.example.mylibrary.listener.CustomTabEntity;
 import com.example.mylibrary.listener.OnTabSelectListener;
 import com.jaeger.library.StatusBarUtil;
+import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -81,7 +82,7 @@ public class TenantActivity extends BaseActivity {
     private List<Fragment> fragments;
     private int lastState = 1;
     private String billId ;
-
+    LoadingDialog ld;
     MyUser user = MyUser.getCurrentUser(MyUser.class);
     int d;
     private Handler mHandler;
@@ -111,7 +112,9 @@ public class TenantActivity extends BaseActivity {
         mDrawerLayout =  findViewById(R.id.drawer_layout);
         mNav =  findViewById(R.id.nav_view);
         mNavIv= findViewById(R.id.uc_nav);
-
+        ld = new LoadingDialog(TenantActivity.this);
+        ld.show();
+        ld.setLoadingText("载入中");
 
         mHandler = new Handler(){
             @Override
@@ -123,6 +126,7 @@ public class TenantActivity extends BaseActivity {
                         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragments, getNames());
                         mViewPager.setAdapter(myFragmentPagerAdapter);
                         mTablayout.setTabData(mTabEntities);
+                        ld.close();
                         break;
                 }
 
