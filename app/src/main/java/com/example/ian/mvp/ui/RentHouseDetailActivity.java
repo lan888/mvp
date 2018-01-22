@@ -229,7 +229,7 @@ public class RentHouseDetailActivity extends BaseActivity {
                                                                 if (e == null) {
                                                                     Log.e("success", "更新成功:" + r2.getUpdatedAt());
                                                                 } else {
-                                                                    Log.e("succes", "更新失败：" + e.getMessage());
+                                                                    Log.e("failed", "更新失败：" + e.getMessage());
                                                                 }
                                                             }
                                                         });
@@ -301,19 +301,23 @@ public class RentHouseDetailActivity extends BaseActivity {
                                                 public void done(BmobException e) {
                                                     if (e == null) {
                                                         Log.e("success", "更新成功:" + bill.getUpdatedAt());
+                                                        Utils.showShortToast(RentHouseDetailActivity.this,"已提交");
                                                     } else {
                                                         Log.e("failed", "更新失败：" + e.getMessage());
+
                                                     }
                                                 }
                                             });
                                             Log.e("name", "查询成功" + id);
+                                        }else {
+                                            Utils.showShortToast(RentHouseDetailActivity.this,"您还没有需要缴费的账单");
                                         }
                                     }else {
                                         Log.e("smile", "错误码：" + e.getErrorCode() + "，错误描述：" + e.getMessage());
                                     }
                                 }
                             });
-                            Utils.showShortToast(RentHouseDetailActivity.this,"已提交");
+
                         }
                     });
                     dialog.create().show();
