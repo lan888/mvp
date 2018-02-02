@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.base.BaseActivity;
 import com.example.ian.mvp.mvp.model.MyUser;
@@ -338,7 +339,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     img_url1 = tempUri.getPath();
                     upload(img_url1);
                 }
-
+                Glide.with(LoginActivity.this).load(img_url1).asBitmap().into(mImageView);
+                Glide.with(LoginActivity.this).load(img_url1).asBitmap().into(img);
                 //将图片URI转换成存储路径
                 //  CursorLoader cursorLoader = new CursorLoader(this,tempUri,null,null,null,null);
 
@@ -350,10 +352,17 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     Log.e("bd_uri","uri:"+data.getData()+"\n"+cursor);
                     Toast.makeText(LoginActivity.this,"uri:"+data.getData(),Toast.LENGTH_SHORT).show();
                     if (cursor!=null&&cursor.moveToFirst()) {
-                        int index = cursor.getColumnIndex("_data");
-                        String img_url = cursor.getString(index);
-                        Log.e("uri_cp","url:"+img_url);
-                        upload(img_url);
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                            int index = cursor.getColumnIndex("_data");
+                            String img_url = cursor.getString(index);
+                            Log.e("uri_cp","url:"+img_url);
+                            upload(img_url);
+                        }else{
+                            int index = cursor.getColumnIndex("_display_name");
+                            String img_url = cursor.getString(index);
+                            Log.e("uri_cp","url:"+img_url);
+                            upload(img_url);
+                        }
                     }
                 }
 
@@ -435,7 +444,11 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
-                this.finish();
+                //按返回键不退出程序，仅仅返回桌面
+                Intent setIntent = new Intent(Intent.ACTION_MAIN);
+                setIntent.addCategory(Intent.CATEGORY_HOME);
+                setIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(setIntent);
             }
             return true;
         }
