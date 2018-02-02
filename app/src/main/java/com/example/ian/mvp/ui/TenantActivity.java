@@ -304,7 +304,7 @@ public class TenantActivity extends BaseActivity {
             public void onClick(View view) {
                 MyUser.logOut();
                 finish();
-                Utils.start_Activity(TenantActivity.this,LoginActivity.class);
+                Utils.start_Activity(TenantActivity.this,Login2Activity.class);
                 Toast.makeText(TenantActivity.this,"已成功退出",Toast.LENGTH_SHORT).show();
 
             }
