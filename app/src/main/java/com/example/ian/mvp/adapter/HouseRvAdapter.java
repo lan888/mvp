@@ -1,7 +1,9 @@
 package com.example.ian.mvp.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -112,21 +114,36 @@ public class HouseRvAdapter  extends RecyclerView.Adapter<HouseRvAdapter.ViewHol
         @Override
         public void onClick(View view) {
             if (view==delBtn){
-                deleteText = roomsList.get(getAdapterPosition()).getObjectId();
-                r.setObjectId(deleteText);
-                r.delete(new UpdateListener() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("确定删除此房源？")
+                       .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
-                    public void done(BmobException e) {
-                        if (e == null) {
-                            Log.e("success", "删除成功:" + r.getAddressInfo());
-                        } else {
-                            Log.e("fail", "删除失败：" + e.getMessage());
-                        }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        deleteText = roomsList.get(getAdapterPosition()).getObjectId();
+                        r.setObjectId(deleteText);
+                        r.delete(new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    Log.e("success", "删除成功:" + r.getAddressInfo());
+                                } else {
+                                    Log.e("fail", "删除失败：" + e.getMessage());
+                                }
+                            }
+                        });
+                        mHouseNameData.remove(getAdapterPosition());
+                        mHouseImgData.remove(getAdapterPosition());
+                        Utils.showShortToast(context,"删除成功，请下拉刷新一下");
                     }
-                });
-                mHouseNameData.remove(getAdapterPosition());
-                mHouseImgData.remove(getAdapterPosition());
-                Utils.showShortToast(context,"删除成功，请下拉刷新一下");
+                })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
+
+
             }else {
                 Intent info = new Intent(context, HouseDetailActivity.class);
                 info.putExtra("address",mHouseNameData.get(getAdapterPosition()));

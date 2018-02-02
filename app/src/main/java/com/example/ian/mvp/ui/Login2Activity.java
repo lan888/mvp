@@ -45,16 +45,16 @@ import cn.bmob.v3.listener.UploadFileListener;
  * Created by Ian on 2018/1/3 0003.
  */
 
-public class LoginActivity extends BaseActivity implements LoginActivityView {
+public class Login2Activity extends BaseActivity implements LoginActivityView {
 
     private EditText name;//用户名
     private EditText password;//用户密码
     private Button login_btn;//登录按钮
-    private Button phoneLogin_btn;//手机号登录验证按钮
     private TextView register;//注册
     private TextView forgetNum;//忘记密码
     private RoundImageView mImageView;//头像
-    private TextView passwordLogin;
+    private TextView phoneLogin;
+
     PermissionManager helper;
 
 
@@ -75,24 +75,23 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
     @Override
     public void initControl() {
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_password);
 
         name =  findViewById(R.id.admin_login_activity_name_input);
         password =  findViewById(R.id.admin_login_activity_password_input);
         login_btn =  findViewById(R.id.admin_login_activity_login);
-        phoneLogin_btn = findViewById(R.id.login_activity_phoneLogin);
         register =  findViewById(R.id.admin_login_activity_register);
         forgetNum =  findViewById(R.id.admin_login_activity_forgetNum);
         mImageView =  findViewById(R.id.admin_pic);
-        passwordLogin = findViewById(R.id.password_btn);
+        phoneLogin = findViewById(R.id.phone_btn);
         presenter = new LoginActivityPresenterImpl(this);
 
 
         FileUtils.init();
 
-        helper = PermissionManager.with(LoginActivity.this)
+        helper = PermissionManager.with(Login2Activity.this)
                 //添加权限请求码
-                .addRequestCode(LoginActivity.TAKE_PICTURE)
+                .addRequestCode(Login2Activity.TAKE_PICTURE)
                 //设置权限，可以添加多个权限
                 .permissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
                 //设置权限监听器
@@ -101,13 +100,13 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     @Override
                     public void onGranted() {
                         //当权限被授予时调用
-                        Utils.showShortToast(LoginActivity.this,"Camera Permission granted");
+                        Utils.showShortToast(Login2Activity.this,"Camera Permission granted");
                     }
 
                     @Override
                     public void onDenied() {
                         //用户拒绝该权限时调用
-                        Toast.makeText(LoginActivity.this, "Camera Permission denied",Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login2Activity.this, "Camera Permission denied",Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -142,27 +141,22 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
     @Override
     public void setListener() {
-        passwordLogin.setOnClickListener(new View.OnClickListener() {
+
+        phoneLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.start_Activity(LoginActivity.this, Login2Activity.class);
+                Utils.start_Activity(Login2Activity.this, LoginActivity.class);
             }
         });
 
         forgetNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.start_Activity(LoginActivity.this,ForgetNumActivity.class);
+                Utils.start_Activity(Login2Activity.this,ForgetNumActivity.class);
             }
         });
 
-        phoneLogin_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String nameInfo = name.getText().toString();
-                presenter.requestSMSCode(nameInfo,"login",LoginActivity.this);
-            }
-        });
+
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,8 +169,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                LayoutInflater factory = LayoutInflater.from(LoginActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login2Activity.this);
+                LayoutInflater factory = LayoutInflater.from(Login2Activity.this);
                 final View textEntryView = factory.inflate(R.layout.register,null);
                 builder.setTitle("管理员注册");
                 builder.setView(textEntryView);
@@ -196,7 +190,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
                     }
                 });
-                Toast.makeText(LoginActivity.this, "请点击头像框设置头像" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login2Activity.this, "请点击头像框设置头像" , Toast.LENGTH_SHORT).show();
 
                 builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -223,19 +217,19 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                                             }
                                         }
                                         else {
-                                            Toast.makeText(LoginActivity.this, "电子邮箱不能为空", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Login2Activity.this, "电子邮箱不能为空", Toast.LENGTH_SHORT).show();
                                         }
                                     } else {
-                                        Toast.makeText(LoginActivity.this, "两次密码不相同", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Login2Activity.this, "两次密码不相同", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "密码为6位纯数字", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login2Activity.this, "密码为6位纯数字", Toast.LENGTH_SHORT).show();
                                 }
                             }else {
-                                Toast.makeText(LoginActivity.this, "用户名不能为空", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Login2Activity.this, "用户名不能为空", Toast.LENGTH_SHORT).show();
                             }
                         } else {
-                            Toast.makeText(LoginActivity.this, "手机号码格式错误", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login2Activity.this, "手机号码格式错误", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -278,7 +272,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
 
     protected void showChoosePicDialog() {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(LoginActivity.this);
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(Login2Activity.this);
         builder.setTitle("添加图片");
         String[] items = { "选择本地照片", "拍照" };
         builder.setNegativeButton("取消", null);
@@ -307,9 +301,9 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                             if (file.exists()) {
                                 file.delete();
                             }
-                            tempUri = FileUtils.getUriForFile(LoginActivity.this,file);
-                            FileUtils.startActionFile(LoginActivity.this,file,"image/*");
-                            FileUtils.startActionCapture(LoginActivity.this,file,TAKE_PICTURE);
+                            tempUri = FileUtils.getUriForFile(Login2Activity.this,file);
+                            FileUtils.startActionFile(Login2Activity.this,file,"image/*");
+                            FileUtils.startActionCapture(Login2Activity.this,file,TAKE_PICTURE);
 
                         } else {
                             Log.e("main","sdcard not exists");
@@ -328,7 +322,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
                 Cursor cursor1= getContentResolver().query(tempUri,null,null,null,null);
                 Log.e("uri","uri:"+tempUri+"\n"+cursor1);
-                Toast.makeText(LoginActivity.this,"uri:"+tempUri,Toast.LENGTH_SHORT).show();
+                Toast.makeText(Login2Activity.this,"uri:"+tempUri,Toast.LENGTH_SHORT).show();
                 if (cursor1!=null&&cursor1.moveToFirst()){
                     int index1=cursor1.getColumnIndex("_display_name");
                     img_url1="/storage/emulated/0/ian/files/"+cursor1.getString(index1);
@@ -348,7 +342,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                 if (data.getData()!=null){
                     Cursor cursor= getContentResolver().query(data.getData(),null,null,null,null);
                     Log.e("bd_uri","uri:"+data.getData()+"\n"+cursor);
-                    Toast.makeText(LoginActivity.this,"uri:"+data.getData(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login2Activity.this,"uri:"+data.getData(),Toast.LENGTH_SHORT).show();
                     if (cursor!=null&&cursor.moveToFirst()) {
                         int index = cursor.getColumnIndex("_data");
                         String img_url = cursor.getString(index);
@@ -362,7 +356,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
             case CROP_SMALL_PICTURE:
                 if (data != null){
                     setImageToView(data);
-                    Toast.makeText(LoginActivity.this,"设置头像成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login2Activity.this,"设置头像成功",Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

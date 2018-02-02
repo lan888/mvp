@@ -1,7 +1,9 @@
 package com.example.ian.mvp.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.ui.RentHouseDetailActivity;
+import com.example.ian.mvp.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -95,6 +98,28 @@ public class RentHouseRvAdapter extends RecyclerView.Adapter<RentHouseRvAdapter.
            housePrice = itemView.findViewById(R.id.ll_house_price);
            houseStatus = itemView.findViewById(R.id.house_status);
            itemView.setOnClickListener(this);
+           itemView.setOnLongClickListener(new View.OnLongClickListener() {
+               @Override
+               public boolean onLongClick(View view) {
+                   AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                   builder.setTitle("要退租吗？")
+                           .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int i) {
+
+                               }
+                           })
+                           .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int i) {
+
+                               }
+                           })
+                           .create().show();
+                   Utils.showShortToast(context,"要退租吗？");
+                   return true;
+               }
+           });
         }
 
         @Override
@@ -104,5 +129,6 @@ public class RentHouseRvAdapter extends RecyclerView.Adapter<RentHouseRvAdapter.
             context.startActivity(info);
 
         }
+
     }
 }

@@ -94,6 +94,7 @@ public class RentHouseActivity extends BaseActivity {
                             mHousePriceData.add(r.getPrice());
                             mHouseImgData.add(r.getHouseImg().get(0));
                             mHouseStatusData.add(r.getStatus());
+
                         }
                         Utils.putIntValue(RentHouseActivity.this,"rent",1);
                         handler.sendEmptyMessage(0);

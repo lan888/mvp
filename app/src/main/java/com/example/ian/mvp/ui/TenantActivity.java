@@ -148,7 +148,7 @@ public class TenantActivity extends BaseActivity {
 
         if (user == null){
             Toast.makeText(this,"请重新登陆",Toast.LENGTH_SHORT).show();
-            Utils.start_Activity(this,LoginActivity.class);
+            Utils.start_Activity(this,Login2Activity.class);
         }else {
             String s2 = user.getUsername();
             nUser.setText(s2);

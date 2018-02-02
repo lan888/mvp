@@ -46,7 +46,7 @@ public class StartActivity extends BaseActivity {
         boolean isFirstOpen = Utils.getBoolean(this, Utils.FIRST_OPEN, true);
         int a = Utils.getIntValue(this,"is_landlord");
        if (isFirstOpen){
-           Utils.start_Activity(this,LoginActivity.class);
+           Utils.start_Activity(this,Login2Activity.class);
            finish();
            //取消界面跳转时的动画，使启动页的logo图片与注册、登录主页的logo图片完美衔接
            overridePendingTransition(0, 0);

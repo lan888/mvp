@@ -179,7 +179,7 @@ public class LandlordActivity extends BaseActivity {
 
         if (user == null){
             Toast.makeText(LandlordActivity.this,"请重新登陆",Toast.LENGTH_SHORT).show();
-            Utils.start_Activity(LandlordActivity.this,LoginActivity.class);
+            Utils.start_Activity(LandlordActivity.this,Login2Activity.class);
         }else {
             String s2 = user.getUsername();
             nUser.setText(s2);
@@ -314,12 +314,6 @@ public class LandlordActivity extends BaseActivity {
         mMsgTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LandlordActivity.this,"小样，赶紧交房租！哈哈哈",Toast.LENGTH_SHORT).show();
-            }
-        });
-        mMcTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 if (data.size()==0){
                     Utils.showShortToast(LandlordActivity.this,"未有已出租的房源，请努力哈");
                 }else {
@@ -418,6 +412,12 @@ public class LandlordActivity extends BaseActivity {
                     });
                     builder.create().show();
                 }
+            }
+        });
+        mMcTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.start_Activity(LandlordActivity.this,AddHouseActivity.class);
 
             }
         });

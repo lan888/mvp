@@ -60,6 +60,7 @@
         <activity android:name=".ui.BillsActivity"/>
         <activity android:name=".ui.SuccessAddActivity"/>
         <activity android:name=".ui.RentBillsActivity"/>
+        <activity android:name=".ui.Login2Activity"/>
     </application>
 
 </manifest>
