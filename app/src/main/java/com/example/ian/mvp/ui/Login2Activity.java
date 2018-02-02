@@ -38,8 +38,10 @@ import com.example.ian.mvp.widget.RoundImageView;
 
 import java.io.File;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 /**
@@ -153,7 +155,37 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
         forgetNum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.start_Activity(Login2Activity.this,ForgetNumActivity.class);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login2Activity.this);
+                LayoutInflater factory = LayoutInflater.from(Login2Activity.this);
+                final View textEntryView = factory.inflate(R.layout.forgetnum_layout,null);
+                builder.setTitle("找回密码");
+                builder.setView(textEntryView);
+
+                final EditText code =  textEntryView.findViewById(R.id.admin_register_info1);
+
+                builder.setPositiveButton("找回密码", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final String codeInfo = code.getText().toString();
+                        BmobUser.resetPasswordByEmail(codeInfo, new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    Toast.makeText(Login2Activity.this,"重置密码请求成功，请到" + codeInfo + "邮箱进行密码重置操作",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(Login2Activity.this,"失败:" + e.getMessage(),Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
             }
         });
 

@@ -47,7 +47,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
-        <activity android:name=".ui.ForgetNumActivity"/>
         <activity android:name=".ui.LoginActivity"/>
         <activity android:name=".ui.LandlordActivity"/>
         <activity android:name=".ui.HouseActivity"/>

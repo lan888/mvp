@@ -3,17 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0ebeb"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="找回密码"
-        android:textSize="20sp"/>
 
     <EditText
         android:id="@+id/admin_register_info1"
@@ -26,15 +19,6 @@
         android:background="@mipmap/input_box"
         android:gravity="center"
         android:hint="请填写注册的电子邮箱" />
-    <Button
-        android:id="@+id/find"
-        style="@style/common_button_style"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="找回密码" />
+
 
 </LinearLayout>
