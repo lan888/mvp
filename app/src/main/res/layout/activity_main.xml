@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="欢迎使用租房管理系统"
+        android:text="欢迎使用房屋租赁系统"
         android:textSize="20sp" />
     <TextView
         android:layout_width="match_parent"
