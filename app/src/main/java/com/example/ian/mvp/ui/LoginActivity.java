@@ -238,21 +238,29 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                     }
                 });
 
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("确定", null);
+                builder.create();
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         String phoneInfo = phone.getText().toString();
                         String nameInfo = name.getText().toString();
                         String firstPasswordInfo = firstPassword.getText().toString();
                         String secondPasswordInfo = secondPassword.getText().toString();
                         String mailInfo = mail.getText().toString();
-                        if (phoneInfo.matches("[1][358]\\d{9}")) {
+                        if (phoneInfo.matches("[1][3589]\\d{9}")) {
                             if (!nameInfo.equals("")) {
                                 if (firstPasswordInfo.matches("[0-9]{6}")) {
                                     if (firstPasswordInfo.equals(secondPasswordInfo)) {
                                         if (!mailInfo.equals("")) {
-                                            if (uri != null){
-                                               presenter.register(nameInfo,secondPasswordInfo,mailInfo,phoneInfo,uri);
+                                            if (uri != null||!img.getDrawable().getCurrent().getConstantState().equals(getResources().getDrawable(R.mipmap.admin_photo).getConstantState())){
+                                                presenter.register(nameInfo,secondPasswordInfo,mailInfo,phoneInfo,uri);
+                                                dialog.dismiss();
+                                            }
+                                            else {
+                                                Toast.makeText(LoginActivity.this, "未添加头像，请点击头像框添加头像", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                         else {
@@ -269,10 +277,10 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
                             }
                         } else {
                             Toast.makeText(LoginActivity.this, "手机号码格式错误", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
-                builder.create().show();
             }
         });
 

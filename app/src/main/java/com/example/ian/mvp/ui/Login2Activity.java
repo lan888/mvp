@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -231,22 +232,29 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
 
                     }
                 });
-
-                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("确定", null);
+                builder.create();
+                final AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
                         String phoneInfo = phone.getText().toString();
                         String nameInfo = name.getText().toString();
                         String firstPasswordInfo = firstPassword.getText().toString();
                         String secondPasswordInfo = secondPassword.getText().toString();
                         String mailInfo = mail.getText().toString();
-                        if (phoneInfo.matches("[1][358]\\d{9}")) {
+                        if (phoneInfo.matches("[1][3589]\\d{9}")) {
                             if (!nameInfo.equals("")) {
                                 if (firstPasswordInfo.matches("[0-9]{6}")) {
                                     if (firstPasswordInfo.equals(secondPasswordInfo)) {
                                         if (!mailInfo.equals("")) {
-                                            if (uri != null){
-                                               presenter.register(nameInfo,secondPasswordInfo,mailInfo,phoneInfo,uri);
+                                            if (uri != null||!img.getDrawable().getCurrent().getConstantState().equals(getResources().getDrawable(R.mipmap.admin_photo).getConstantState())){
+                                                presenter.register(nameInfo,secondPasswordInfo,mailInfo,phoneInfo,uri);
+                                                dialog.dismiss();
+                                            }
+                                            else {
+                                                Toast.makeText(Login2Activity.this, "未添加头像，请点击头像框添加头像", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                         else {
@@ -263,10 +271,10 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
                             }
                         } else {
                             Toast.makeText(Login2Activity.this, "手机号码格式错误", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });
-                builder.create().show();
             }
         });
 
@@ -374,19 +382,23 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
             case CHOOSE_PICTURE:
                 cutImage(data.getData());
                 if (data.getData()!=null){
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                     Cursor cursor= getContentResolver().query(data.getData(),null,null,null,null);
                     Log.e("bd_uri","uri:"+data.getData()+"\n"+cursor);
                     Toast.makeText(Login2Activity.this,"uri:"+data.getData(),Toast.LENGTH_SHORT).show();
                     if (cursor!=null&&cursor.moveToFirst()) {
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
                             int index = cursor.getColumnIndex("_data");
                             String img_url = cursor.getString(index);
                             Log.e("uri_cp","url:"+img_url);
                             upload(img_url);
-                        }else{
-                            int index = cursor.getColumnIndex("_display_name");
-                            String img_url = cursor.getString(index);
-                            Log.e("uri_cp","url:"+img_url);
+                        }
+                    }else{
+                        String[] proj = {MediaStore.Images.Media.DATA};
+                        Cursor cursor2 = getContentResolver().query(data.getData(),proj, null, null, null);
+                        if (cursor2!=null&&cursor2.moveToFirst()) {
+                            int index = cursor2.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                            String img_url = cursor2.getString(index);
+                            Log.e("uri_cp", "url:" + img_url);
                             upload(img_url);
                         }
                     }
@@ -403,7 +415,7 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
         }
     }
 
-    private   void cutImage(Uri uri){
+    private void cutImage(Uri uri){
         if (uri == null){
             Log.i("al","The uri is not exist.");
         }
