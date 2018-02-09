@@ -28,6 +28,7 @@ import com.example.ian.mvp.mvp.model.Rooms;
 import com.example.ian.mvp.permission.PermissionListener;
 import com.example.ian.mvp.permission.PermissionManager;
 import com.example.ian.mvp.utils.FileUtils;
+import com.example.ian.mvp.utils.JumpTextUtil;
 import com.example.ian.mvp.utils.Utils;
 import com.xiasuhuei321.loadingdialog.view.LoadingDialog;
 
@@ -174,6 +175,16 @@ public class AddHouseActivity extends BaseActivity {
 
     @Override
     public void setListener() {
+        addressInfo.addTextChangedListener(new JumpTextUtil(addressInfo,detailInfo1));
+        detailInfo1.addTextChangedListener(new JumpTextUtil(detailInfo1,priceInfo));
+        priceInfo.addTextChangedListener(new JumpTextUtil(priceInfo,contactsInfo));
+        contactsInfo.addTextChangedListener(new JumpTextUtil(contactsInfo,telInfo));
+        areaInfo.addTextChangedListener(new JumpTextUtil(areaInfo,floorInfo));
+        floorInfo.addTextChangedListener(new JumpTextUtil(floorInfo,allFloorInfo));
+        telInfo.addTextChangedListener(new JumpTextUtil(telInfo,areaInfo));
+        directionInfo.addTextChangedListener(new JumpTextUtil(directionInfo,desInfo));
+        allFloorInfo.addTextChangedListener(new JumpTextUtil(allFloorInfo,directionInfo));
+
         addHouse_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
