@@ -33,6 +33,7 @@ import com.example.ian.mvp.mvp.view.LoginActivityView;
 import com.example.ian.mvp.permission.PermissionListener;
 import com.example.ian.mvp.permission.PermissionManager;
 import com.example.ian.mvp.utils.FileUtils;
+import com.example.ian.mvp.utils.JumpTextUtil;
 import com.example.ian.mvp.utils.Utils;
 import com.example.ian.mvp.widget.RoundImageView;
 
@@ -145,6 +146,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
     @Override
     public void setListener() {
+        name.addTextChangedListener(new JumpTextUtil(name,password));
+
         passwordLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
