@@ -392,8 +392,9 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
 
                 break;
             case CHOOSE_PICTURE:
-                cutImage(data.getData());
-
+                if (data!=null){
+                    cutImage(data.getData());
+                }
                 break;
             case CROP_SMALL_PICTURE:
                 if (img_url != null){

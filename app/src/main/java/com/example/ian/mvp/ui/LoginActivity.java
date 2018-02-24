@@ -393,7 +393,9 @@ public class LoginActivity extends BaseActivity implements LoginActivityView {
 
                 break;
             case CHOOSE_PICTURE:
-                cutImage(data.getData());
+                if (data!=null){
+                    cutImage(data.getData());
+                }
 
 
                 break;
