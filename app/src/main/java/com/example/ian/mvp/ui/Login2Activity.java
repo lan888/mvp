@@ -3,13 +3,11 @@ package com.example.ian.mvp.ui;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
@@ -72,6 +70,7 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
     private String mFilePath;
     private String mFileName;
     private String img_url1;
+    private String img_url;
     private BmobFile uri;
     private LoginActivityPresenter presenter;
     private long exitTime;
@@ -209,7 +208,7 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Login2Activity.this);
                 LayoutInflater factory = LayoutInflater.from(Login2Activity.this);
                 final View textEntryView = factory.inflate(R.layout.register,null);
-                builder.setTitle("管理员注册");
+                builder.setTitle("注册");
                 builder.setView(textEntryView);
 
                 img = textEntryView.findViewById(R.id.admin_pic_reg);
@@ -329,6 +328,19 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
                         Intent openAlbumIntent = new Intent(
                                 Intent.ACTION_GET_CONTENT);
                         openAlbumIntent.setType("image/*");
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                            mFilePath = FileUtils.getFileDir() + File.separator;
+                            File path = new File(mFilePath);
+                            if (!path.exists()) {
+                                path.mkdirs();
+                            }
+                            mFileName = System.currentTimeMillis() + ".jpg";
+                            File file = new File(path, mFileName);
+                            if (file.exists()) {
+                                file.delete();
+                            }
+                            img_url=mFilePath+mFileName;
+                        }
                         //用startActivityForResult方法，待会儿重写onActivityResult()方法，拿到图片做裁剪操作
                         startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
 
@@ -346,7 +358,7 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
                                 file.delete();
                             }
                             tempUri = FileUtils.getUriForFile(Login2Activity.this,file);
-                            FileUtils.startActionFile(Login2Activity.this,file,"image/*");
+//                            FileUtils.startActionFile(Login2Activity.this,file,"image/*");
                             FileUtils.startActionCapture(Login2Activity.this,file,TAKE_PICTURE);
 
                         } else {
@@ -363,19 +375,16 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case TAKE_PICTURE:
-
-                Cursor cursor1= getContentResolver().query(tempUri,null,null,null,null);
-                Log.e("uri","uri:"+tempUri+"\n"+cursor1);
-                Toast.makeText(Login2Activity.this,"uri:"+tempUri,Toast.LENGTH_SHORT).show();
-                if (cursor1!=null&&cursor1.moveToFirst()){
-                    int index1=cursor1.getColumnIndex("_display_name");
-                    img_url1="/storage/emulated/0/ian/files/"+cursor1.getString(index1);
+                 cutImage(tempUri);
+//                Cursor cursor1= getContentResolver().query(tempUri,null,null,null,null);
+//                Log.e("uri","uri:"+tempUri+"\n"+cursor1);
+//                Toast.makeText(Login2Activity.this,"uri:"+tempUri,Toast.LENGTH_SHORT).show();
+//                if (cursor1!=null&&cursor1.moveToFirst()){
+//                    int index1=cursor1.getColumnIndex("_display_name");
+                    img_url1=mFilePath+mFileName;
                     upload(img_url1);
                     Log.e("uri_tp","url:"+img_url1);
-                }else {
-                    img_url1 = tempUri.getPath();
-                    upload(img_url1);
-                }
+
                 Glide.with(Login2Activity.this).load(img_url1).asBitmap().into(mImageView);
                 Glide.with(Login2Activity.this).load(img_url1).asBitmap().into(img);
                 //将图片URI转换成存储路径
@@ -384,34 +393,12 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
                 break;
             case CHOOSE_PICTURE:
                 cutImage(data.getData());
-                if (data.getData()!=null){
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-                    Cursor cursor= getContentResolver().query(data.getData(),null,null,null,null);
-                    Log.e("bd_uri","uri:"+data.getData()+"\n"+cursor);
-                    Toast.makeText(Login2Activity.this,"uri:"+data.getData(),Toast.LENGTH_SHORT).show();
-                    if (cursor!=null&&cursor.moveToFirst()) {
-                            int index = cursor.getColumnIndex("_data");
-                            String img_url = cursor.getString(index);
-                            Log.e("uri_cp","url:"+img_url);
-                            upload(img_url);
-                        }
-                    }else{
-                        String[] proj = {MediaStore.Images.Media.DATA};
-                        Cursor cursor2 = getContentResolver().query(data.getData(),proj, null, null, null);
-                        if (cursor2!=null&&cursor2.moveToFirst()) {
-                            int index = cursor2.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                            String img_url = cursor2.getString(index);
-                            Log.e("uri_cp", "url:" + img_url);
-                            upload(img_url);
-                        }
-                    }
-                }
-
 
                 break;
             case CROP_SMALL_PICTURE:
-                if (data != null){
-                    setImageToView(data);
+                if (img_url != null){
+                    setImageToView(img_url);
+                    upload(img_url);
                     Toast.makeText(Login2Activity.this,"设置头像成功",Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -438,7 +425,8 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
 //        Uri uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
 //        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
 //        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.putExtra("return-data", true);
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(img_url)));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
@@ -452,13 +440,11 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
 
 
 
-    protected void setImageToView(Intent data) {
-        Bundle extras = data.getExtras();
-        if (extras != null) {
-            mBitmap = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(mBitmap);
+    protected void setImageToView(String data) {
+        if (data != null) {
+            Drawable drawable = new BitmapDrawable(data);
             mImageView.setImageDrawable(drawable);
-            img.setImageBitmap(mBitmap);
+            img.setImageDrawable(drawable);
             //这里图片是方形的，可以用一个工具类处理成圆形（很多头像都是圆形，这种工具类网上很多不再详述）
 
         }

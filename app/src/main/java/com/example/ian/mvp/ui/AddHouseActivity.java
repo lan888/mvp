@@ -3,10 +3,12 @@ package com.example.ian.mvp.ui;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -64,6 +66,7 @@ public class AddHouseActivity extends BaseActivity {
     private ArrayList<String> houseImg;
     protected static final int CHOOSE_PICTURE = 0;
     protected static final int TAKE_PICTURE = 1;
+    protected static final int CROP_SMALL_PICTURE = 2;
 
     EditText addressInfo;
     Spinner typeInfo;
@@ -226,6 +229,19 @@ public class AddHouseActivity extends BaseActivity {
                         Intent openAlbumIntent = new Intent(
                                 Intent.ACTION_GET_CONTENT);
                         openAlbumIntent.setType("image/*");
+                        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                            mFilePath = FileUtils.getFileDir() + File.separator;
+                            File path = new File(mFilePath);
+                            if (!path.exists()) {
+                                path.mkdirs();
+                            }
+                            mFileName = System.currentTimeMillis() + ".jpg";
+                            File file = new File(path, mFileName);
+                            if (file.exists()) {
+                                file.delete();
+                            }
+                            img_url=mFilePath+mFileName;
+                        }
                         //用startActivityForResult方法，待会儿重写onActivityResult()方法，拿到图片做裁剪操作
                         startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
 
@@ -242,7 +258,7 @@ public class AddHouseActivity extends BaseActivity {
                             if (file.exists()) {
                                 file.delete();
                             }
-
+                            img_url=mFilePath+mFileName;
                             tempUri = FileUtils.getUriForFile(AddHouseActivity.this, file);
                           //  FileUtils.startActionFile(AddHouseActivity.this, file, "image/*");
                             FileUtils.startActionCapture(AddHouseActivity.this, file, TAKE_PICTURE);
@@ -263,38 +279,21 @@ public class AddHouseActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case TAKE_PICTURE:
-                Cursor cursor1 = getContentResolver().query(tempUri, null, null, null, null);
-                Log.e("uri", "uri:" + tempUri + "\n" + cursor1);
-                Toast.makeText(AddHouseActivity.this, "uri:" + tempUri, Toast.LENGTH_SHORT).show();
-                if (cursor1 != null && cursor1.moveToFirst()) {
-                    int index1 = cursor1.getColumnIndex("_display_name");
-                    img_url = "/storage/emulated/0/ian/files/"+ cursor1.getString(index1);
-                    filePaths.add(img_url);
-                    photoPath(img_url);
-                    Log.e("cp_uri", "url:" + img_url);
-                }
-                else {
-                    img_url = tempUri.getPath();
-                    filePaths.add(img_url);
-                    photoPath(img_url);
-                }
-
-
-            case CHOOSE_PICTURE:
-                if (data != null) {
-                    Cursor cursor = getContentResolver().query(data.getData(), null, null, null, null);
-                    Log.e("bd_uri", "uri:" + data.getData() + "\n" + cursor);
-                    Toast.makeText(AddHouseActivity.this, "uri:" + data.getData(), Toast.LENGTH_SHORT).show();
-                    if (cursor != null && cursor.moveToFirst()) {
-                        int index = cursor.getColumnIndex("_data");
-                        String cimg_url = cursor.getString(index);
-                        filePaths.add(cimg_url);
-                        photoPath(cimg_url);
-                        //upload(cimg_url);
-
+                    if (img_url!=null){
+                        filePaths.add(img_url);
+                        photoPath(img_url);
+                        Log.e("cp_uri", "url:" + img_url);
                     }
-                }
 
+                    break;
+            case CHOOSE_PICTURE:
+                cutImage(data.getData());
+                break;
+            case CROP_SMALL_PICTURE:
+                if (img_url!=null){
+                    filePaths.add(img_url);
+                    photoPath(img_url);
+                }
 
         }
     }
@@ -417,6 +416,34 @@ public class AddHouseActivity extends BaseActivity {
         }
     };
 
+    private void cutImage(Uri uri){
+        if (uri == null){
+            Log.i("al","The uri is not exist.");
+        }
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+
+        Log.e("uri!!!","Url:"+uri);
+        intent.setDataAndType(uri, "image/*");
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 500);
+        intent.putExtra("outputY", 500);
+//        Uri uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
+//        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+//        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        intent.putExtra("return-data", false);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(img_url)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        }
+        startActivityForResult(intent, CROP_SMALL_PICTURE);
+
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
