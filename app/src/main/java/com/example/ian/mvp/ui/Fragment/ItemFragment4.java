@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.mvp.model.Bill;
 import com.example.ian.mvp.mvp.model.MyUser;
+import com.example.ian.mvp.ui.BillsActivity;
+import com.example.ian.mvp.ui.RentBillsActivity;
+import com.example.ian.mvp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +153,13 @@ public class ItemFragment4 extends Fragment {
 
             @Override
             public void onClick(View view) {
+                int a = Utils.getIntValue(getContext(),"is_landlord");
+                if (a==1){
+                    Utils.start_Activity(getActivity(), BillsActivity.class);
+                }else {
+                    Utils.start_Activity(getActivity(), RentBillsActivity.class);
+                }
+
 //                String roomInfo = mDataTime.get(getAdapterPosition()) ;
 //                Log.e("data","查询成功:"+roomInfo);
 //                BmobQuery query = new BmobQuery<Bill>();

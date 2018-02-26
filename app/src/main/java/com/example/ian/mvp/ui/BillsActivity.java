@@ -518,7 +518,7 @@ public class BillsActivity extends AppCompatActivity {
 
             String key = (String) keys[section];
 
-            ((TextView) view.findViewById(R.id.month)).setText(key.split("-")[1]+"月");
+            ((TextView) view.findViewById(R.id.month)).setText(key.split("-")[0]+"年"+key.split("-")[1]+"月");
 
             return view;
         }

@@ -21,7 +21,11 @@
         android:id="@+id/main"
         android:name="com.example.ian.mvp.ui.Fragment.ItemFragment4"
         />
-    
+    <com.example.ian.mvp.widget.StickyHeaderListView
+        android:id="@+id/r_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"/>
     
     
 </RelativeLayout>

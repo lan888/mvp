@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ian.mvp.R;
 import com.example.ian.mvp.mvp.model.Bill;
 import com.example.ian.mvp.mvp.model.MyUser;
+import com.example.ian.mvp.ui.BillsActivity;
+import com.example.ian.mvp.ui.RentBillsActivity;
+import com.example.ian.mvp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,28 +154,12 @@ public class ItemFragment3 extends Fragment {
 
             @Override
             public void onClick(View view) {
-                String roomInfo = mDataTime.get(getAdapterPosition()) ;
-                BmobQuery query = new BmobQuery<Bill>();
-                query.addWhereEqualTo("createdAt",roomInfo);
-                query.setLimit(1);
-                query.findObjects(new FindListener<Bill>() {
-                    @Override
-                    public void done(List<Bill> list, BmobException e) {
-                        if(e==null){
-                            Log.e("success","查询成功:"+list.size()+"条数据");
-                            for (  Bill r  : list){
-                                pi = r.getRoom();
-                                po = r.getCreatedAt();
-                                pp = r.getBill();
-                            }
-                            Toast.makeText(getActivity(),"房间号为："+pi+"\n时间："+po+"\n上月房租金额为："+pp,Toast.LENGTH_SHORT).show();
-                        }else {
-                            Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
-                        }
-                    }
-
-                });
-
+                int a = Utils.getIntValue(getContext(),"is_landlord");
+                if (a==1){
+                    Utils.start_Activity(getActivity(), BillsActivity.class);
+                }else {
+                    Utils.start_Activity(getActivity(), RentBillsActivity.class);
+                }
 
                 }
 

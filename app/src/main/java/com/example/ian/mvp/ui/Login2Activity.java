@@ -387,8 +387,7 @@ public class Login2Activity extends BaseActivity implements LoginActivityView {
 
                 Glide.with(Login2Activity.this).load(img_url1).asBitmap().into(mImageView);
                 Glide.with(Login2Activity.this).load(img_url1).asBitmap().into(img);
-                //将图片URI转换成存储路径
-                //  CursorLoader cursorLoader = new CursorLoader(this,tempUri,null,null,null,null);
+
 
                 break;
             case CHOOSE_PICTURE:
